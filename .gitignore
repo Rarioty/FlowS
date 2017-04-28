@@ -31,3 +31,6 @@
 # Debug files
 *.dSYM/
 *.su
+
+# All extern files
+extern/*
