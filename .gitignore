@@ -34,3 +34,6 @@
 
 # All extern files
 extern/*
+
+# All bin files
+bin/*
