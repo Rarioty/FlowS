@@ -1,15 +1,11 @@
-OBJECTS = src/boot/loader.o
+.PHONY: clean
 
-LDFLAGS = -T src/boot/link.ld -melf_i386
-AS = nasm
-ASFLAGS = -f elf
+all: sources
 
-all: kernel.elf
+sources:
+	make -C src
 
-kernel.elf: $(OBJECTS)
-	ld $(LDFLAGS) $(OBJECTS) -o src/boot/kernel.elf
-
-os.iso: kernel.elf
+os.iso: sources
 	cp src/boot/kernel.elf iso/boot/kernel.elf
 	genisoimage -R                              \
                 -b boot/grub/stage2_eltorito    \
@@ -25,10 +21,6 @@ os.iso: kernel.elf
 run: os.iso
 	bochs -f extern/bochs_configuration -q
 
-%.o: %.s
-	$(AS) $(ASFLAGS) $< -o $@
-
 clean:
-	rm -rf src/boot/*.o
-	rm -rf src/boot/kernel.elf
+	make -C src clean
 	rm -rf bin/os.iso
