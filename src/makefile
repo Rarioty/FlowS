@@ -1,9 +1,27 @@
-.PHONY: clean boot
+OBJECTS = kmain.o boot/loader.o
 
-all: boot
+CC = gcc
+AS = nasm
 
-boot:
-	make -C boot
+CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
+	-nostartfiles -nodefaultlibs -Wall -Wextra -Werror -c
+LDFLAGS = -T link.ld -melf_i386
+
+ASFLAGS = -f elf
+
+.PHONY: clean
+
+all: kernel.elf
+
+kernel.elf: $(OBJECTS)
+	ld $(LDFLAGS) $(OBJECTS) -o kernel.elf
+
+%.o: %.c
+	$(CC) $(CFLAGS) $< -o $@
+
+%.o: %.s
+	$(AS) $(ASFLAGS) $< -o $@
 
 clean:
-	make -C boot clean
+	rm -rf $(OBJECTS)
+	rm -rf kernel.elf

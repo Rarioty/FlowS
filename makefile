@@ -6,7 +6,7 @@ sources:
 	make -C src
 
 os.iso: sources
-	cp src/boot/kernel.elf iso/boot/kernel.elf
+	cp src/kernel.elf iso/boot/kernel.elf
 	genisoimage -R                              \
                 -b boot/grub/stage2_eltorito    \
                 -no-emul-boot                   \
