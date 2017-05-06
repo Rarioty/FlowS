@@ -1,11 +1,25 @@
-.PHONY: clean
+.PHONY: clean sources
+
+CURRENTDIR  = $(shell pwd)
+LIBSDIR		= $(CURRENTDIR)/libs
+INCLUDEDIR  = $(CURRENTDIR)/include
+MAKEINC		= $(CURRENTDIR)/makefile.inc
+
+export LIBSDIR
+export INCLUDEDIR
+export MAKEINC
+
+include $(MAKEINC)
 
 all: sources
 
 sources:
-	make -C src
+	$(ECHO) "Building sources..."
+	cd src; $(MAKE) $(MFLAGS)
+	$(ECHO) "DONE"
 
 os.iso: sources
+	$(ECHO) "Generating iso image..."
 	cp src/kernel.elf iso/boot/kernel.elf
 	genisoimage -R                              \
                 -b boot/grub/stage2_eltorito    \
@@ -17,10 +31,12 @@ os.iso: sources
                 -boot-info-table                \
                 -o bin/os.iso                   \
                 iso
+	$(ECHO) "DONE"
 
 run: os.iso
-	bochs -f extern/bochs_configuration -q
+	-bochs -f extern/bochs_configuration -q
 
 clean:
-	make -C src clean
+	$(ECHO) "Cleaning launched"
 	rm -rf bin/os.iso
+	cd src; $(MAKE) $(MFLAGS) clean

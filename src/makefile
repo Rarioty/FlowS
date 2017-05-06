@@ -1,27 +1,32 @@
-OBJECTS = kmain.o boot/loader.o
+include $(MAKEINC)
 
-CC = gcc
-AS = nasm
+OBJECTS = kmain.o
+OBJLIBS = libboot.a
 
-CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
-	-nostartfiles -nodefaultlibs -Wall -Wextra -Werror -c
-LDFLAGS = -T link.ld -melf_i386
+LDFLAGS := -T link.ld -melf_i386
 
-ASFLAGS = -f elf
+LIBS	= -L$(LIBSDIR) -lboot
 
 .PHONY: clean
 
 all: kernel.elf
 
-kernel.elf: $(OBJECTS)
-	ld $(LDFLAGS) $(OBJECTS) -o kernel.elf
+kernel.elf: $(OBJECTS) $(OBJLIBS)
+	$(ECHO) "Linking kernel.elf..."
+	$(LD) -o kernel.elf $(LDFLAGS) $(OBJECTS) $(LIBS)
+
+libboot.a: force_look
+	$(ECHO) "Generating libboot.a"
+	cd boot; $(MAKE) $(MFLAGS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) $< -o $@
 
-%.o: %.s
-	$(AS) $(ASFLAGS) $< -o $@
+force_look:
+	true
 
 clean:
+	$(ECHO) "Cleaning src"
 	rm -rf $(OBJECTS)
 	rm -rf kernel.elf
+	cd boot; $(MAKE) $(MFLAGS) clean
