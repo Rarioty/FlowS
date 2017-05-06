@@ -9,9 +9,11 @@ int kernel_main(void)
 {
     terminal_initialize();
     terminal_writeline("=== FlowS ===");
-    terminal_writeline("testing...");
 
-    printf("test %c - %s", 'a', "ok");
+    for (int i = 20; i < 70; ++i)
+    {
+        printf("testing scrolling (%c)\n", i);
+    }
 
     return 1;
 }
