@@ -1,7 +1,7 @@
 include $(MAKEINC)
 
-SRCS		= tty.c gdt.c
-OBJECTS 	= $(SRCS:.c=.o)
+SRCS		= tty.c gdt.c idt.c interrupts.c
+OBJECTS 	= $(SRCS:.c=.o) interrupts_asm.o
 
 TARGET 		= libkernel.a
 
@@ -23,6 +23,9 @@ libkernel.a: $(OBJECTS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) $< -o $@
+
+%.o: %.s
+	$(AS) $(ASFLAGS) $< -o $@
 
 clean:
 	$(ECHO) "Cleaning kernel"
