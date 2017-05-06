@@ -1,6 +1,7 @@
 CC      = gcc
 CFLAGS  = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
 	-nostartfiles -nodefaultlibs -Wall -Wextra -Werror -I$(INCLUDEDIR)/libc -I$(INCLUDEDIR) -O0 -g -c
+LIBKFLAGS = $(CFLAGS) -D__is_libk
 AS      = nasm
 ASFLAGS =
 LD      = ld

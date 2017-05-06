@@ -3,6 +3,8 @@ include $(MAKEINC)
 SRCS		= tty.c
 OBJECTS 	= tty.o
 
+TARGET 		= libkernel.a
+
 all: libkernel.a
 
 depend: .depend
@@ -15,13 +17,14 @@ depend: .depend
 include .depend
 
 libkernel.a: $(OBJECTS)
-	$(ECHO) "Linking libkernel.a"
-	$(AR) $(ARFLAGS) rv $(LIBSDIR)/libkernel.a $?
-	$(RANLIB) $(LIBSDIR)/libkernel.a
+	$(ECHO) "Linking $(TARGET)"
+	$(AR) $(ARFLAGS) rv $(LIBSDIR)/$(TARGET) $?
+	$(RANLIB) $(LIBSDIR)/$(TARGET)
 
 %.o: %.c
 	$(CC) $(CFLAGS) $< -o $@
 
 clean:
+	$(ECHO) "Cleaning kernel"
 	rm -rf $(OBJECTS)
 	rm -rf $(TARGETLIB)

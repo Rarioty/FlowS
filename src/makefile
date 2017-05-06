@@ -9,7 +9,7 @@ OBJLIBS = \
 
 LDFLAGS := -T link.ld -melf_i386
 
-LIBS	= -L$(LIBSDIR) -lboot -lkernel -lc
+LIBS	= -L$(LIBSDIR) -lboot -lkernel -lk
 
 .PHONY: clean
 
