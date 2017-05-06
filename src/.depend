@@ -1,3 +1,4 @@
 kmain.o: kmain.c /home/achevali/Documents/FlowS/include/kernel/tty.h \
  /home/achevali/Documents/FlowS/include/libc/stddef.h \
+ /home/achevali/Documents/FlowS/include/kernel/gdt.h \
  /home/achevali/Documents/FlowS/include/libc/stdio.h

@@ -1,7 +1,7 @@
 include $(MAKEINC)
 
-SRCS		= tty.c
-OBJECTS 	= tty.o
+SRCS		= tty.c gdt.c
+OBJECTS 	= $(SRCS:.c=.o)
 
 TARGET 		= libkernel.a
 
