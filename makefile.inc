@@ -1,10 +1,10 @@
 CC      = gcc
 CFLAGS  = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
-	-nostartfiles -nodefaultlibs -Wall -Wextra -Werror -c -I$(INCLUDEDIR)/libc
+	-nostartfiles -nodefaultlibs -Wall -Wextra -Werror -I$(INCLUDEDIR)/libc -I$(INCLUDEDIR) -O0 -g -c
 AS      = nasm
 ASFLAGS =
 LD      = ld
-LDFLAGS =
+LDFLAGS = -g
 AR      = ar
 ARFLAGS =
 RANLIB  = ranlib
