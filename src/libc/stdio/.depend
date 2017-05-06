@@ -1,0 +1,6 @@
+printf.o: printf.c /home/achevali/Documents/FlowS/include/libc/stdio.h \
+ /home/achevali/Documents/FlowS/include/libc/string.h \
+ /home/achevali/Documents/FlowS/include/libc/stddef.h \
+ /home/achevali/Documents/FlowS/include/libc/stdbool.h \
+ /home/achevali/Documents/FlowS/include/libc/stdarg.h \
+ /home/achevali/Documents/FlowS/include/libc/limits.h
