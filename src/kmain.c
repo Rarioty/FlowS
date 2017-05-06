@@ -3,12 +3,15 @@
 #endif
 
 #include <kernel/tty.h>
+#include <stdio.h>
 
 int kernel_main(void)
 {
     terminal_initialize();
-    terminal_putchar('0');
-    terminal_putchar('b');
+    terminal_writeline("=== FlowS ===");
+    terminal_writeline("testing...");
+
+    printf("test %c - %s", 'a', "ok");
 
     return 1;
 }

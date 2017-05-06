@@ -7,6 +7,8 @@
 extern "C" {
 #endif
 
+#define EOF '\n'
+
 size_t strlen(const char*);
 
 #ifdef __cplusplus
