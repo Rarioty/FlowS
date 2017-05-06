@@ -1,7 +1,9 @@
 include $(MAKEINC)
 
 OBJECTS = kmain.o
-OBJLIBS = libboot.a
+OBJLIBS = \
+	libboot.a		\
+	libc.a
 
 LDFLAGS := -T link.ld -melf_i386
 
@@ -19,6 +21,10 @@ libboot.a: force_look
 	$(ECHO) "Generating libboot.a"
 	cd boot; $(MAKE) $(MFLAGS)
 
+libc.a: force_look
+	$(ECHO) "Generating libc.a"
+	cd libc; $(MAKE) $(MFLAGS)
+
 %.o: %.c
 	$(CC) $(CFLAGS) $< -o $@
 
@@ -30,3 +36,4 @@ clean:
 	rm -rf $(OBJECTS)
 	rm -rf kernel.elf
 	cd boot; $(MAKE) $(MFLAGS) clean
+	cd libc; $(MAKE) $(MFLAGS) clean
