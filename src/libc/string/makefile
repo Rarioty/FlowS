@@ -1,6 +1,6 @@
 include $(MAKEINC)
 
-SRCS 		= strlen.c
+SRCS 		= strlen.c memcpy.c memcmp.c memset.c
 OBJECTS 	= $(SRCS:.c=.o)
 TARGETLIB 	= ../libcstring.a
 TARGETLIBK  = ../libcstring_k.a
