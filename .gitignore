@@ -37,3 +37,6 @@ extern/*
 
 # All bin files
 bin/*
+
+# All libs files
+libs/*
