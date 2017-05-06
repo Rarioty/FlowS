@@ -18,5 +18,5 @@ libboot.a: $(OBJECTS)
 
 clean:
 	$(ECHO) "Cleaning boot"
-	$(RM) $(OBJECTS)
-	$(RM) $(LIBSDIR)/libboot.a
+	$(RM) -rf $(OBJECTS)
+	$(RM) -rf $(LIBSDIR)/libboot.a
