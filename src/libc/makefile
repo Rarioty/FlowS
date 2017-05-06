@@ -7,6 +7,9 @@ LIBS = \
 
 all: libc.a
 
+depend: force_look
+	cd string; $(MAKE) $(MFLAGS) depend
+
 libc.a: $(LIBS)
 	@mkdir tmp
 	mv libcstring.a tmp

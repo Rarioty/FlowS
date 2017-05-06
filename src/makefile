@@ -1,17 +1,30 @@
 include $(MAKEINC)
 
+SRCS	= kmain.c
 OBJECTS = kmain.o
 OBJLIBS = \
 	libboot.a		\
-	libc.a
+	libc.a			\
+	libkernel.a
 
 LDFLAGS := -T link.ld -melf_i386
 
-LIBS	= -L$(LIBSDIR) -lboot -lc
+LIBS	= -L$(LIBSDIR) -lboot -lkernel -lc
 
 .PHONY: clean
 
 all: kernel.elf
+
+depend: .depend
+	cd libc; $(MAKE) $(MFLAGS) depend
+	cd kernel; $(MAKE) $(MFLAGS) depend
+
+.depend: $(SRCS)
+	rm -f ./.depend
+	$(CC) $(CFLAGS) -MM $^ -MF ./.depend
+
+# Add it after depend command because it will raise an error otherwise
+include .depend
 
 kernel.elf: $(OBJECTS) $(OBJLIBS)
 	$(ECHO) "Linking kernel.elf..."
@@ -25,6 +38,10 @@ libc.a: force_look
 	$(ECHO) "Generating libc.a"
 	cd libc; $(MAKE) $(MFLAGS)
 
+libkernel.a: force_look
+	$(ECHO) "Generating libkernel.a"
+	cd kernel; $(MAKE) $(MFLAGS)
+
 %.o: %.c
 	$(CC) $(CFLAGS) $< -o $@
 
@@ -37,3 +54,4 @@ clean:
 	rm -rf kernel.elf
 	cd boot; $(MAKE) $(MFLAGS) clean
 	cd libc; $(MAKE) $(MFLAGS) clean
+	cd kernel; $(MAKE) $(MFLAGS) clean

@@ -1,10 +1,9 @@
 include $(MAKEINC)
 
-SRCS 		= strlen.c
-OBJECTS 	= strlen.o
-TARGETLIB 	= ../libcstring.a
+SRCS		= tty.c
+OBJECTS 	= tty.o
 
-all: libcstring.a
+all: libkernel.a
 
 depend: .depend
 
@@ -15,10 +14,10 @@ depend: .depend
 # Add it after depend command because it will raise an error otherwise
 include .depend
 
-libcstring.a: $(OBJECTS)
-	$(ECHO) "Linking libcstring.a"
-	$(AR) $(ARFLAGS) rv $(TARGETLIB) $?
-	$(RANLIB) $(TARGETLIB)
+libkernel.a: $(OBJECTS)
+	$(ECHO) "Linking libkernel.a"
+	$(AR) $(ARFLAGS) rv $(LIBSDIR)/libkernel.a $?
+	$(RANLIB) $(LIBSDIR)/libkernel.a
 
 %.o: %.c
 	$(CC) $(CFLAGS) $< -o $@

@@ -13,10 +13,13 @@ include $(MAKEINC)
 
 all: sources
 
-sources:
+sources: depend
 	$(ECHO) "Building sources..."
 	cd src; $(MAKE) $(MFLAGS)
 	$(ECHO) "DONE"
+
+depend:
+	cd src; $(MAKE) $(MFLAGS) depend
 
 os.iso: sources
 	$(ECHO) "Generating iso image..."
