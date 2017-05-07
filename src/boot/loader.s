@@ -12,7 +12,7 @@ KERNEL_STACK_SIZE   equ 16384                       ; size of stack in bytes
 ; search for this signature in the first 8kiB of the kernel file, aligned at a
 ; 32-bit boundary. The signature is in its own section so the header can be
 ; forced to be within the first 8kiB of the kernel file.
-section .multiboot:
+section .multiboot
 align 4
     dd MAGIC_NUMBER
     dd FLAGS
@@ -38,7 +38,7 @@ stack_top:
 ; bootloader will jump to this position once the kernel has been loaded. It
 ; doesn't make sense to return from this function as the bootloader is gone.
 ; Declare _start as a function symbol with the given symbol size.
-section .text:
+section .text
 global _start:function (_start.end - _start)
 _start:
     ; The bootloader has loaded us into 32-bit protected mode on a x86
