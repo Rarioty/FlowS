@@ -1,6 +1,6 @@
 include $(MAKEINC)
 
-SRCS		= tty.c gdt.c idt.c interrupts.c
+SRCS		= tty.c gdt.c idt.c interrupts.c pic.c
 OBJECTS 	= $(SRCS:.c=.o) interrupts_asm.o
 
 TARGET 		= libkernel.a

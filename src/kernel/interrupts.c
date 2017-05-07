@@ -18,7 +18,7 @@ void isr_clock_int(void)
     }
 }
 
-void isr_kdb_int(void)
+void isr_kbd_int(void)
 {
     printf("keyboard\n");
 }

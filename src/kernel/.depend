@@ -1,2 +1,1 @@
-interrupts.o: interrupts.c \
- /home/achevali/Documents/FlowS/include/libc/stdio.h
+pic.o: pic.c /home/achevali/Documents/FlowS/include/kernel/io.h
