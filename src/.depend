@@ -1,5 +1,6 @@
-kmain.o: kmain.c /home/achevali/Documents/FlowS/include/kernel/tty.h \
+kmain.o: kmain.c /home/achevali/Documents/FlowS/include/kernel/cursor.h \
  /home/achevali/Documents/FlowS/include/libc/stddef.h \
+ /home/achevali/Documents/FlowS/include/kernel/tty.h \
  /home/achevali/Documents/FlowS/include/kernel/gdt.h \
  /home/achevali/Documents/FlowS/include/kernel/idt.h \
  /home/achevali/Documents/FlowS/include/kernel/pic.h \

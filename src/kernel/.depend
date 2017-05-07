@@ -1,1 +1,3 @@
-pic.o: pic.c /home/achevali/Documents/FlowS/include/kernel/io.h
+cursor.o: cursor.c /home/achevali/Documents/FlowS/include/kernel/cursor.h \
+ /home/achevali/Documents/FlowS/include/libc/stddef.h \
+ /home/achevali/Documents/FlowS/include/kernel/io.h

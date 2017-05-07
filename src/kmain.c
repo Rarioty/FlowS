@@ -2,6 +2,7 @@
 #error "You need a ix86-elf compiler !"
 #endif
 
+#include <kernel/cursor.h>
 #include <kernel/tty.h>
 #include <kernel/gdt.h>
 #include <kernel/idt.h>
@@ -15,6 +16,8 @@ void kernel_main(void)
 {
     terminal_initialize();
     terminal_writeline("=== FlowS ===");
+
+    hide_cursor();
 
     terminal_special("Initializing IDT...\n", TERMINAL_INFO);
     init_idt();
