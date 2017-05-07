@@ -1,8 +1,8 @@
-#include <stdio.h>
+#include <kernel/tty.h>
 
 void isr_default_int(void)
 {
-    printf ("interrupt\n");
+    terminal_writeline("interrupt");
 }
 
 void isr_clock_int(void)
@@ -14,11 +14,11 @@ void isr_clock_int(void)
     {
         sec++;
         tic = 0;
-        printf("clock\n");
+        terminal_writeline("clock");
     }
 }
 
 void isr_kbd_int(void)
 {
-    printf("keyboard\n");
+    terminal_writeline("keyboard");
 }

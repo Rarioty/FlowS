@@ -16,13 +16,13 @@ void kernel_main(void)
     terminal_initialize();
     terminal_writeline("=== FlowS ===");
 
-    printf("Initializing IDT...\n");
+    terminal_special("Initializing IDT...\n", TERMINAL_INFO);
     init_idt();
 
-    printf("Initializing PIC...\n");
+    terminal_special("Initializing PIC...\n", TERMINAL_INFO);
     init_pic();
 
-    printf("Initializing GDT...\n");
+    terminal_special("Initializing GDT...\n", TERMINAL_INFO);
     init_gdt();
 
     asm("movw $0x18, %ax \n \
@@ -34,11 +34,11 @@ void kernel_main(void)
 
 int main(void)
 {
-    printf("kernel: GDT loaded !\n");
+    terminal_special("kernel: GDT loaded !\n", TERMINAL_INFO);
 
     sti;
 
-    printf("kernel: Interrupts are allowed\n");
+    terminal_special("kernel: Interrupts are allowed\n", TERMINAL_WARNING);
 
     while(1);
 

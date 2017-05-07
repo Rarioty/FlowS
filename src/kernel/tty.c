@@ -7,7 +7,9 @@ static const size_t         VGA_HEIGHT      = 25;
 static uint16_t* const      VGA_MEMORY      = (uint16_t*) 0xB8000;
 
 static uint8_t base_color  = VGA_COLOR_LIGHT_GREY   | VGA_COLOR_BLACK   << 4;
-static uint8_t error_color = VGA_COLOR_WHITE        | VGA_COLOR_RED     << 4;
+static uint8_t info_color  = VGA_COLOR_LIGHT_GREEN  | VGA_COLOR_BLACK   << 4;
+static uint8_t warn_color  = VGA_COLOR_WHITE        | VGA_COLOR_RED     << 4;
+static uint8_t error_color = VGA_COLOR_BLACK        | VGA_COLOR_RED     << 4;
 
 static size_t    terminal_row;
 static size_t    terminal_column;
@@ -106,10 +108,21 @@ void terminal_writeline(const char* data)
     terminal_write("\r\n", 2);
 }
 
-void terminal_error(const char* data)
+void terminal_special(const char* data, int action)
 {
-    terminal_color = error_color;
-    terminal_writestring("ERROR: ");
+    switch (action)
+    {
+    case TERMINAL_ERROR:
+        terminal_color = error_color;
+        terminal_writestring("ERROR: ");
+        break;
+    case TERMINAL_INFO:
+        terminal_color = info_color;
+        break;
+    case TERMINAL_WARNING:
+        terminal_color = warn_color;
+        break;
+    }
     terminal_write(data, strlen(data));
     terminal_color = base_color;
 }
