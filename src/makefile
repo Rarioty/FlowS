@@ -21,7 +21,7 @@ depend: .depend
 
 .depend: $(SRCS)
 	rm -f ./.depend
-	$(CC) $(CFLAGS) -MM $^ -MF ./.depend
+	$(CC) $(CFLAGS) -MM $^ >> ./.depend
 
 # Add it after depend command because it will raise an error otherwise
 include .depend
@@ -55,3 +55,8 @@ clean:
 	cd boot; $(MAKE) $(MFLAGS) clean
 	cd libc; $(MAKE) $(MFLAGS) clean
 	cd kernel; $(MAKE) $(MFLAGS) clean
+
+purge:
+	rm -rf .depend
+	cd libc; $(MAKE) $(MFLAGS) purge
+	cd kernel; $(MAKE) $(MFLAGS) purge

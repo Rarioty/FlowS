@@ -56,5 +56,9 @@ clean:
 	rm -rf $(LIBSDIR)/libc.a
 	rm -rf $(LIBSDIR)/libk.a
 
+purge: force_look
+	cd string; $(MAKE) $(MFLAGS) purge
+	cd stdio; $(MAKE) $(MFLAGS) purge
+
 force_look:
 	true

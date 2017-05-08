@@ -1,3 +1,12 @@
+strlen.o: strlen.c /home/achevali/Documents/FlowS/include/libc/string.h \
+ /home/achevali/Documents/FlowS/include/libc/stddef.h \
+ /home/achevali/Documents/FlowS/include/libc/stdbool.h
+memcpy.o: memcpy.c /home/achevali/Documents/FlowS/include/libc/string.h \
+ /home/achevali/Documents/FlowS/include/libc/stddef.h \
+ /home/achevali/Documents/FlowS/include/libc/stdbool.h
+memcmp.o: memcmp.c /home/achevali/Documents/FlowS/include/libc/string.h \
+ /home/achevali/Documents/FlowS/include/libc/stddef.h \
+ /home/achevali/Documents/FlowS/include/libc/stdbool.h
 memset.o: memset.c /home/achevali/Documents/FlowS/include/libc/string.h \
  /home/achevali/Documents/FlowS/include/libc/stddef.h \
  /home/achevali/Documents/FlowS/include/libc/stdbool.h

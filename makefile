@@ -43,3 +43,6 @@ clean:
 	$(ECHO) "Cleaning launched"
 	rm -rf bin/os.iso
 	cd src; $(MAKE) $(MFLAGS) clean
+
+purge: clean
+	cd src; $(MAKE) $(MFLAGS) purge

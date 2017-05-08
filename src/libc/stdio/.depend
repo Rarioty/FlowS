@@ -1,3 +1,5 @@
+putchar.o: putchar.c /home/achevali/Documents/FlowS/include/libc/stdio.h
+puts.o: puts.c /home/achevali/Documents/FlowS/include/libc/stdio.h
 printf.o: printf.c /home/achevali/Documents/FlowS/include/libc/stdio.h \
  /home/achevali/Documents/FlowS/include/libc/string.h \
  /home/achevali/Documents/FlowS/include/libc/stddef.h \

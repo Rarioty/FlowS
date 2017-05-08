@@ -11,7 +11,7 @@ depend: .depend
 
 .depend: $(SRCS)
 	rm -f ./.depend
-	$(CC) $(CFLAGS) -MM $^ -MF ./.depend
+	$(CC) $(CFLAGS) -MM $^ >> ./.depend
 
 # Add it after depend command because it will raise an error otherwise
 include .depend
@@ -31,3 +31,6 @@ clean:
 	$(ECHO) "Cleaning kernel"
 	rm -rf $(OBJECTS)
 	rm -rf $(TARGETLIB)
+
+purge:
+	rm -rf .depend

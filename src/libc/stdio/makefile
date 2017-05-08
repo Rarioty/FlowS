@@ -12,8 +12,8 @@ all: libstdio.a
 depend: .depend
 
 .depend: $(SRCS)
-	rm -f ./.depend
-	$(CC) $(CFLAGS) -MM $^ -MF ./.depend
+	@rm -f ./.depend
+	$(CC) $(CFLAGS) -MM $^ >> ./.depend
 
 # Add it after depend command because it will raise an error otherwise
 include .depend
@@ -36,6 +36,9 @@ libcstring.a: $(OBJECTS)
 
 clean:
 	$(ECHO) "Cleaning stdio"
-	rm -rf $(OBJECTS)
-	rm -rf $(LIBK_OBJECTS)
-	rm -rf $(TARGETLIB)
+	@rm -rf $(OBJECTS)
+	@rm -rf $(LIBK_OBJECTS)
+	@rm -rf $(TARGETLIB)
+
+purge:
+	@rm -rf .depend

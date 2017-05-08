@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <stdarg.h>
+#include <stddef.h>
 #include <limits.h>
 
 static bool print(const char* data, size_t length)
@@ -11,6 +12,23 @@ static bool print(const char* data, size_t length)
     {
         if (putchar(bytes[i]) == EOF)
             return false;
+    }
+
+    return true;
+}
+
+static bool dump(unsigned char* addr, int n)
+{
+    char c1, c2;
+    char* tab = "0123456789ABCDEF";
+
+    while (n--)
+    {
+        c1 = tab[(*addr & 0xF0) >> 4];
+        c2 = tab[*addr & 0x0F];
+        addr++;
+        putchar(c1);
+        putchar(c2);
     }
 
     return true;
@@ -78,6 +96,19 @@ int printf(const char* restrict format, ...)
             if (!print(str, len))
                 return -1;
             written += len;
+        }
+        else if (*format == 'x')
+        {
+            format++;
+            uint32_t val = va_arg(parameters, uint32_t);
+            if (maxrem < sizeof(uint32_t))
+            {
+                // TODO: set errno to EOVERFLOW.
+                return -1;
+            }
+            if (!dump((unsigned char*)&val, sizeof(val)))
+                return -1;
+            written += sizeof(val);
         }
         else
         {
