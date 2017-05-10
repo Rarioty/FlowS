@@ -1,4 +1,4 @@
-.PHONY: clean sources
+.PHONY: clean sources docs
 
 CURRENTDIR  = $(shell pwd)
 LIBSDIR		= $(CURRENTDIR)/libs
@@ -38,6 +38,9 @@ os.iso: sources
 
 run: os.iso
 	-bochs -f extern/bochs_configuration -q
+
+docs:
+	@doxygen doxyfile.inc
 
 clean:
 	$(ECHO) "Cleaning launched"

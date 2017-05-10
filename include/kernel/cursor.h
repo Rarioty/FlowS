@@ -1,9 +1,26 @@
+/********************************************************
+ * Cursor.h                                             *
+ *                                                      *
+ * Handle all cursor functions for the vga terminal     *
+ *                                                      *
+ ********************************************************/
+
 #ifndef _CURSOR_H_
 #define _CURSOR_H_
 
 #include <stddef.h>
 
-void move_cursor(uint8_t, uint8_t);
+/**
+ *  \brief Move the cursor in the \a x, \a y position
+ *
+ *  \param[in]  x   The x position
+ *  \param[in]  y   The y position
+ */
+void move_cursor(uint8_t x, uint8_t y);
+
+/**
+ *  \brief Move the cursor out of sight
+ */
 void hide_cursor(void);
 
 #endif

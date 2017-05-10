@@ -40,3 +40,6 @@ bin/*
 
 # All libs files
 libs/*
+
+# The documentation
+doc/*
