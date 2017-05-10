@@ -1,3 +1,6 @@
+/**
+ * \brief Map of a french keyboard
+ */
 unsigned char kbdmap[] = {
     0x1B, 0x1B, 0x1B, 0x1B,     /* Escape       */
      '&',  '1',  ' ',  ' ',

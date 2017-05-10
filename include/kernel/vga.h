@@ -1,6 +1,10 @@
 #ifndef _VGA_H_
 #define _VGA_H_
 
+/**
+ * \enum    vga_color
+ * \brief   List of all colors available in the terminal
+ */
 enum vga_color
 {
     VGA_COLOR_BLACK            = 0,
@@ -21,11 +25,23 @@ enum vga_color
     VGA_COLOR_WHITE            = 15
 };
 
+/**
+ * \brief Return a terminal color structured
+ *
+ * \param[in]   fg  Foreground color
+ * \param[in]   bg  Background color
+ */
 static inline uint8_t vga_entry_color(enum vga_color fg, enum vga_color bg)
 {
     return fg | bg << 4;
 }
 
+/**
+ * \brief Structure a terminal entry with a colored character
+ *
+ * \param[in]   uc      Character to print
+ * \param[in]   color   Color of the character (background & foreground)
+ */
 static inline uint16_t vga_entry(unsigned char uc, uint8_t color)
 {
     return (uint16_t) uc | (uint16_t)color << 8;

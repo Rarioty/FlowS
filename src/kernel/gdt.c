@@ -23,10 +23,10 @@ void init_gdt(void)
     init_gdt_desc(0x00, 0xFFFFF, 0x93, 0x0D, &kgdt[2]);
     init_gdt_desc(0x00, 0x00,    0x97, 0x0D, &kgdt[3]);
 
-    kgdtr.limite = GDT_SIZE * 8;
-    kgdtr.base   = GDT_BASE;
+    kgdtr.size   = GDT_SIZE * 8;
+    kgdtr.offset = GDT_BASE;
 
-    memcpy((char*) kgdtr.base, (char*) kgdt, kgdtr.limite);
+    memcpy((char*) kgdtr.offset, (char*) kgdt, kgdtr.size);
 
     asm("lgdtl (kgdtr)");
 

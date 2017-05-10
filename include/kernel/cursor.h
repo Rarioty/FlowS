@@ -1,10 +1,3 @@
-/********************************************************
- * Cursor.h                                             *
- *                                                      *
- * Handle all cursor functions for the vga terminal     *
- *                                                      *
- ********************************************************/
-
 #ifndef _CURSOR_H_
 #define _CURSOR_H_
 

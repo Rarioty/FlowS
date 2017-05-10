@@ -4,22 +4,27 @@
 #ifndef _VA_LIST
     #define _VA_LIST
     #if defined __GNUC__ && __GNUC__ >= 3
-        typedef __builtin_va_list va_list;
+        typedef __builtin_va_list va_list;      /*!<    List of variable argument   */
     #else
-        typedef char* va_list;
+        typedef char* va_list;                  /*!<    List of variable argument   */
     #endif
 #endif
 
-/*
- * Amount of space required in an argument list (ie. the stack) for an
- * argument of type t.
+/**
+ * \brief Amount of space required in an argument list (ie. the stack) for an argument of type t.
+ *
+ * \param[in]   t   Type from which we want the size
+ *
+ * \return  Amount of space required
  */
 #define __va_argsiz(t)	\
 	(((sizeof(t) + sizeof(int) - 1) / sizeof(int)) * sizeof(int))
 
-/*
- * Start variable argument list processing by setting AP to point to the
- * argument after pN.
+/**
+ * \brief   Start variable argument list processing by setting AP to point to the argument after pN.
+ *
+ * \param[in]   ap  The variable argument list
+ * \param[in]   pN  The last argument before the variable arguments
  */
 #ifdef	__GNUC__
     /*
@@ -38,12 +43,21 @@
         ((ap) = ((va_list) (&pN) + __va_argsiz(pN)))
 #endif
 
-/*
- * End processing of variable argument list. In this case we do nothing.
+/**
+ * \brief   End processing of variable argument list. In this case we do nothing.
+ *
+ * \param[in]   ap  The variable argument list
  */
 #define va_end(ap)	((void)0)
 
-/*
+/**
+ * \brief   Return an argument from the stack with the specified type
+ *
+ * \param [in]  ap  List of variable arguments
+ * \param [in]  t   Type of argument we want
+ *
+ * \return  The value
+ *
  * Increment ap to the next argument in the list while returing a
  * pointer to what ap pointed to first, which is of type t.
  *
