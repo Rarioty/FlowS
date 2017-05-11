@@ -32,6 +32,9 @@
 *.dSYM/
 *.su
 
+# Remove user local makefile.inc
+makefile.inc
+
 # All extern files
 extern/*
 

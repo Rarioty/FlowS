@@ -1,14 +1,18 @@
-CC      = gcc
+CROSS_COMPILER_BINARIES_FOLDER 	=
+CROSS_COMPILER_TARGET			= 
+PREFIX							= $(CROSS_COMPILER_BINARIES_FOLDER)/$(CROSS_COMPILER_TARGET)-
+
+CC      = $(PREFIX)gcc
 CFLAGS  = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
 	-nostartfiles -nodefaultlibs -Wall -Wextra -Werror -I$(INCLUDEDIR)/libc -I$(INCLUDEDIR) -O0 -g -c
 LIBKFLAGS = $(CFLAGS) -D__is_libk
 AS      = nasm
 ASFLAGS = -f elf
-LD      = ld
+LD      = $(PREFIX)ld
 LDFLAGS = -g
-AR      = ar
+AR      = $(PREFIX)ar
 ARFLAGS =
-RANLIB  = ranlib
+RANLIB  = $(PREFIX)ranlib
 RM      = rm
 ECHO    = echo
 
