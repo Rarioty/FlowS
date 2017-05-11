@@ -57,7 +57,7 @@
  *      <li>bit 0: Set to \b 0.</li>
  *      <li>bit 1: Set to \b 0.</li>
  *      <li>bit 2: Size bit. If \b 0 the selector defines 16 bit protected mode. If \b 1 it defines 32 bit protected mode. You can have both 16 bit and 32 bit selectors at once.</li>
- *      <li>bit 3: Granularity bit. If \b 0 the limit is in \b 1 B blocks (byte granularity), if \b 1 the limit is in 4 KiB blocks (page granularity).</li>
+ *      <li>bit 3: Granularity bit. If \b 0 the limit is in 1B blocks (byte granularity), if \b 1 the limit is in 4 KiB blocks (page granularity).</li>
  *  </ul>
  */
 struct gdtdesc
