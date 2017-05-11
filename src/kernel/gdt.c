@@ -18,12 +18,12 @@ void init_gdt_desc(uint32_t base, uint32_t limite, uint8_t access, uint8_t other
 
 void init_gdt(void)
 {
-    /**
+    /*
      * Null descriptor
      */
     init_gdt_desc(0x00, 0x00,    0x00, 0x00, &kgdt[0]);
 
-    /**
+    /*
      * Code segment
      *
      *  base    -> 0x00:        Start at the beginning of the memory
@@ -50,7 +50,7 @@ void init_gdt(void)
      */
     init_gdt_desc(0x00, 0xFFFFF, 0x9B, 0x0D, &kgdt[1]);
 
-    /**
+    /*
      * Data segment
      *
      *  base    -> 0x00:        Start at the beginning of the memory
@@ -77,7 +77,7 @@ void init_gdt(void)
      */
     init_gdt_desc(0x00, 0xFFFFF, 0x93, 0x0D, &kgdt[2]);
 
-    /**
+    /*
      * Stack segment
      *
      *  base    -> 0x00:        Not used by the GDT because it is the stack
