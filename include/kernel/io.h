@@ -1,6 +1,11 @@
 #ifndef _IO_H_
 #define _IO_H_
 
+/**
+ * \file    io.h
+ * \brief   This file handle the input-output functions for the kernel.
+ */
+
 #define cli asm("cli"::)    /*!<    Disable the interrupts     */
 
 #define sti asm("sti"::)    /*!<    Enable the interrupts      */

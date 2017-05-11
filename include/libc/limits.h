@@ -2,8 +2,10 @@
 #define _LIMITS_H_
 
 /**
- * \brief
+ * \file    limits.h
+ * \brief   This file give all the limits for all types.
  */
+
 #define CHAR_BIT	8          /*!<     Number of bits in a `char'.                */
 
 #define SCHAR_MIN	(-128)     /*!<    Minimum value a 'signed char' can hold.     */

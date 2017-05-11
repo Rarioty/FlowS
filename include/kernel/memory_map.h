@@ -3,23 +3,31 @@
 
 /**
  *  \file memory_map.h
- *  \brief This is the memory map of FlowS (from the bottom to the top):
+ *  \brief This is the memory map of FlowS (from the bottom to the top).
  *
  *  <h1>"Low" memory (< 1MiB)</h1>
  *  <h2>Overview</h2>
  *  \verbatim
  *  Start       End             Size            Type            Usable  Description
  *  -----       ---             ----            ----            ------  -----------
- *
  *  0x00000000  0x000003FF      1 KiB           RAM               0     Real Mode IVT (Interrupt Vector Table)
  *  0x00000400  0x000004FF      256 bytes       RAM               0     BDA (BIOS data area, see below)
- *  0x00000500  0x00007BFF      ~ 30 KiB        RAM               1     Conventional memory
+ *  0x00000500  0x00007BFF      ~ 30 KiB        RAM               1     Conventional memory used for FlowS (*)      (*): Used for IDT and GDT (see below)
  *  0x00007C00  0x00007DFF      512 bytes       RAM               0     OS BootSector
  *  0x00007E00  0x0007FFFF      480.5 KiB       RAM               1     Conventional memory
- *  0x00080000  0x0009FBFF      ~ 120 KiB (*)   RAM               1     Conventional memory                     (*): Depending on EBDA size (free for use, \b if \b it \b exists)
+ *  0x00080000  0x0009FBFF      ~ 120 KiB (*)   RAM               1     Conventional memory                         (*): Depending on EBDA size (free for use, IF IT EXISTS)
  *  0x0009FC00  0x0009FFFF      1 KiB           RAM               0     EBDA (Extended BIOS Data Area)
  *  0x000A0000  0x000FFFFF      384 KiB         various           0     Video memory, ROM Area
  *  \endverbatim
+ *
+ *  <h2>FlowS memory area</h2>
+ *  \verbatim
+ *  Start     End       size                        Description
+ *  -----     ---       ----                        -----------
+ *  0x0500    0x0CF8    0xFF * 8 bytes (0x7F8)      GDT
+ *  0x0D00    0x14F8    0xFF * 8 bytes (0x7F8)      IDT
+ *  \endverbatim
+ *
  *  <h2>BIOS Data Area (BDA)</h2>
  *  url: http://www.bioscentral.com/misc/bda.htm
  *  \verbatim
@@ -52,5 +60,19 @@
  *  0x000F0000  0x000FFFFF      64 KiB                  ROM                         Motherboard BIOS
  *  \endverbatim
  */
+
+/**
+ * \brief   Memory position of the GDT
+ *  The GDT has 0xFF segment descriptor and each one is 8 byte long.
+ *  The GDT end up in 0x0CF8 !
+ */
+#define MEMORY_MAP_GDT_POSITION     0x0500
+
+/**
+ * \brief   Memory position of the IDT
+ *  The IDT has 0xFF interrupt descriptors and each one is 8 byte long.
+ *  The IDT end up in 0x14F8
+ */
+#define MEMORY_MAP_IDT_POSITION     0x0D00
 
 #endif

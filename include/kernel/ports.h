@@ -1,6 +1,11 @@
 #ifndef _PORTS_H_
 #define _PORTS_H_
 
+/**
+ * \file    ports.h
+ * \brief   This file handle all the ports used by FlowS for input-output.
+ */
+
 /****************************************************
  *              VGA             PORTS               *
  * url: http://www.osdever.net/FreeVGA/vga/vga.htm  *

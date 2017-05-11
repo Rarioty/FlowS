@@ -1,6 +1,11 @@
 #ifndef _STRING_H_
 #define _STRING_H_
 
+/**
+ * \file    string.h
+ * \brief   This file handle string and memory functions.
+ */
+
 #include <stddef.h>
 #include <stdbool.h>
 

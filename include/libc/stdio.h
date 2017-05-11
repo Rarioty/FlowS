@@ -1,6 +1,11 @@
 #ifndef _STDIO_H_
 #define _STDIO_H_
 
+/**
+ * \file    stdio.h
+ * \brief   This file handle the output to the terminal for the user.
+ */
+
 #ifdef __cplusplus
 extern "C" {
 #endif

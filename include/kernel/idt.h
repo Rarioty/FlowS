@@ -1,10 +1,16 @@
 #ifndef _IDT_H_
 #define _IDT_H_
 
+/**
+ * \file    idt.h
+ * \brief   This file handle the interrupt descriptor table.
+ */
+
+#include <kernel/memory_map.h>
 #include <stddef.h>
 
-#define IDT_BASE    0x800       /*!<    Base of the IDT                             */
-#define IDT_SIZE    0xFF        /*!<    Number of slots for interrupts              */
+#define IDT_BASE    MEMORY_MAP_IDT_POSITION         /*!<    Base of the IDT                             */
+#define IDT_SIZE    0xFF                            /*!<    Number of slots for interrupts              */
 
 #define INTGATE     0x8E00      /*!<    Bits for gate type for an interrupt gate    */
 

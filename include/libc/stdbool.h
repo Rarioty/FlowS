@@ -2,6 +2,11 @@
 #define _STDBOOL_H_
 
 /**
+ * \file    stdbool.h
+ * \brief   This file give the bool type.
+ */
+
+/**
  * \typedef int bool
  * \brief   Give the user the bool type which can be handy sometimes
  */

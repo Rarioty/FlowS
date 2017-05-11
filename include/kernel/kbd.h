@@ -1,3 +1,11 @@
+#ifndef _KBD_H_
+#define _KBD_H_
+
+/**
+ * \file    kbd.h
+ * \brief   This file contains the french keyboard layout.
+ */
+
 /**
  * \brief Map of a french keyboard
  */
@@ -101,3 +109,5 @@ unsigned char kbdmap[] = {
     0xFF, 0xFF, 0xFF, 0xFF,     /* 0x60         */
     0xFF, 0xFF, 0xFF, 0xFF,     /* 0x61         */
 };
+
+#endif

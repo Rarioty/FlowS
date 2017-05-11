@@ -2,6 +2,11 @@
 #define _VGA_H_
 
 /**
+ * \file    vga.h
+ * \brief   This file handle the VGA functions.
+ */
+
+/**
  * \enum    vga_color
  * \brief   List of all colors available in the terminal
  */

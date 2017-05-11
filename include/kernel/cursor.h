@@ -1,6 +1,11 @@
 #ifndef _CURSOR_H_
 #define _CURSOR_H_
 
+/**
+ * \file    cursor.h
+ * \brief   This file handle the terminal cursor.
+ */
+
 #include <stddef.h>
 
 /*

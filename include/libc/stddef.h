@@ -1,6 +1,11 @@
 #ifndef _STDDEF_H_
 #define _STDDEF_H_
 
+/**
+ * \file    stddef.h
+ * \brief   This file give new types with specific size.
+ */
+
 typedef unsigned long   size_t;     /*!<    Size_t can store the maximum size of a theoretically possible object of any type */
 
 typedef unsigned char   uint8_t;    /*<!    8 bits size     */

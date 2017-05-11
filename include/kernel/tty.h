@@ -1,6 +1,11 @@
 #ifndef _TTY_H_
 #define _TTY_H_
 
+/**
+ * \file    tty.h
+ * \brief   This file handle the vga 80x25 terminal.
+ */
+
 #include <stddef.h>
 
 #define TERMINAL_INFO       1       /*!<    INFO flag to print special string       */

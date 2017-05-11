@@ -1,10 +1,16 @@
 #ifndef _GDT_H_
 #define _GDT_H_
 
+/**
+ * \file    gdt.h
+ * \brief   This file handle the global descriptor table.
+ */
+
+#include <kernel/memory_map.h>
 #include <stddef.h>
 
-#define GDT_BASE    0x00    /*!<    Physical address of the gdt in memory               */
-#define GDT_SIZE    0xFF    /*!<    Number of reserved slots for segment descriptors    */
+#define GDT_BASE    MEMORY_MAP_GDT_POSITION     /*!<    Physical address of the gdt in memory               */
+#define GDT_SIZE    0xFF                        /*!<    Number of reserved slots for segment descriptors    */
 
 /**
  *  \struct     gdtdesc

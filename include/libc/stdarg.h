@@ -1,6 +1,11 @@
 #ifndef _STDARG_H_
 #define _STDARG_H_
 
+/**
+ * \file    stdarg.h
+ * \brief   This file handle the variable arguments.
+ */
+
 #ifndef _VA_LIST
     #define _VA_LIST
     #if defined __GNUC__ && __GNUC__ >= 3
