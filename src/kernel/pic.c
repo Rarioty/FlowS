@@ -1,19 +1,21 @@
+#include <kernel/ports.h>
+#include <kernel/pic.h>
 #include <kernel/io.h>
 
 void init_pic(void)
 {
-    outb(0x20, 0x11);
-    outb(0xA0, 0x11);
+    outb(PORT_8259_PIC_MASTER_COMMAND,  PIC_ICW1_INIT + PIC_ICW1_ICW4);
+    outb(PORT_8259_PIC_SLAVE_COMMAND,   PIC_ICW1_INIT + PIC_ICW1_ICW4);
 
-    outb(0x21, 0x20);
-    outb(0xA1, 0x70);
+    outb(PORT_8259_PIC_MASTER_DATA,     PIC_MASTER_START_OFFSET);
+    outb(PORT_8259_PIC_SLAVE_DATA,      PIC_SLAVE_START_OFFSET);
 
-    outb(0x21, 0x04);
-    outb(0xA1, 0x02);
+    outb(PORT_8259_PIC_MASTER_DATA,     PIC_MASTER_PIN_CONNECTION_TO_SLAVE);
+    outb(PORT_8259_PIC_SLAVE_DATA,      PIC_SLAVE_ID);
 
-    outb(0x21, 0x01);
-    outb(0xA1, 0x01);
+    outb(PORT_8259_PIC_MASTER_DATA,     PIC_ICW4_8086);
+    outb(PORT_8259_PIC_SLAVE_DATA,      PIC_ICW4_8086);
 
-    outb(0x21, 0x00);
-    outb(0xA1, 0x00);
+    outb(PORT_8259_PIC_MASTER_DATA,     PIC_MASTER_INTERRUPT_MASK);
+    outb(PORT_8259_PIC_SLAVE_DATA,      PIC_SLAVE_INTERRUPT_MASK);
 }

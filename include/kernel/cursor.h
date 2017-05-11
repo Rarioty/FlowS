@@ -3,6 +3,12 @@
 
 #include <stddef.h>
 
+/*
+ * url: http://www.osdever.net/FreeVGA/vga/crtcreg.htm
+ */
+#define VGA_CURSOR_LOCATION_LOW_REGISTER_COMMAND       0x0F
+#define VGA_CURSOR_LOCATION_HIGH_REGISTER_COMMAND      0x0E
+
 /**
  *  \brief Move the cursor in the \a x, \a y position
  *

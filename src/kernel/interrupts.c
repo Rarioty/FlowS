@@ -1,3 +1,4 @@
+#include <kernel/ports.h>
 #include <kernel/tty.h>
 #include <kernel/kbd.h>
 #include <kernel/io.h>
@@ -29,9 +30,9 @@ void isr_kbd_int(void)
     static int ctrl_enable;
 
     do {
-        i = inb(0x64);
+        i = inb(PORT_8042_STATUS_REGISTER);
     } while ((i & 0x01) == 0);
-    i = inb(0x60);
+    i = inb(PORT_8042_DATA);
     i--;
 
     if (i < 0x80)

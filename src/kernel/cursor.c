@@ -1,4 +1,5 @@
 #include <kernel/cursor.h>
+#include <kernel/ports.h>
 #include <kernel/io.h>
 
 void move_cursor(uint8_t x, uint8_t y)
@@ -7,10 +8,10 @@ void move_cursor(uint8_t x, uint8_t y)
 
     pos = y * 80 + x;
 
-    outb(0x3D4, 0x0F);
-    outb(0X3D5, (uint8_t)pos);
-    outb(0X3D4, 0x0E);
-    outb(0x3D5, (uint8_t)(pos >> 8));
+    outb(PORT_VGA_CRTC_CONTROLLER_ADDRESS_REGISTER, VGA_CURSOR_LOCATION_LOW_REGISTER_COMMAND);
+    outb(PORT_VGA_CRTC_CONTROLLER_DATA_REGISTER,    (uint8_t)pos);
+    outb(PORT_VGA_CRTC_CONTROLLER_ADDRESS_REGISTER, VGA_CURSOR_LOCATION_HIGH_REGISTER_COMMAND);
+    outb(PORT_VGA_CRTC_CONTROLLER_DATA_REGISTER,    (uint8_t)(pos >> 8));
 }
 
 void hide_cursor(void)
