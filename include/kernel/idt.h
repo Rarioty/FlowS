@@ -13,6 +13,7 @@
 #define IDT_SIZE    0xFF                            /*!<    Number of slots for interrupts              */
 
 #define INTGATE     0x8E00      /*!<    Bits for gate type for an interrupt gate    */
+#define TRAPGATE    0xEF00      /*:<    Bits for gate type for a trap gate          */
 
 /**
  *  \struct     idtdesc

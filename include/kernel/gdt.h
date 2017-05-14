@@ -82,6 +82,33 @@ struct gdtr
 } __attribute__((packed));
 
 /**
+ * \struct  tss
+ * \brief   This structure handle the task state segment.
+ */
+struct tss
+{
+    uint16_t    previous_task, previous_task_reserved;      /*!<	Previously executed task.	    */
+    uint32_t    esp0;										/*!<	Stack pointer ring 0    	    */
+    uint16_t    ss0, ss0_reserved;							/*!<	Stack segment ring 0		    */
+    uint32_t    esp1;                                       /*!<	Stack pointer ring 1		    */
+    uint16_t    ss1, ss1_reserved;                          /*!<	Stack segment ring 1		    */
+    uint32_t    esp2;                                       /*!<    Stack pointer ring 2            */
+    uint16_t    ss2, ss2_reserved;                          /*!<    Stack segment ring 2            */
+    uint32_t    cr3;                                        /*!<    CR3 register                    */
+    uint32_t    eip;                                        /*!<    Instruction pointer             */
+    uint32_t    eflags;                                     /*!<    Flag register                   */
+    uint32_t    eax, ecx, edx, ebx, esp, ebp, esi, edi;     /*!<    Base registers                  */
+    uint16_t    es, es_reserved;                            /*!<    Extra segment                   */
+    uint16_t    cs, cs_reserved;                            /*!<    Code segment                    */
+    uint16_t    ss, ss_reserved;                            /*!<    Stack segment                   */
+    uint16_t    ds, ds_reserved;                            /*!<    Data segment                    */
+    uint16_t    fs, fs_reserved;                            /*!<    FS register                     */
+    uint16_t    gs, gs_reserved;                            /*!<    GS register                     */
+    uint16_t    ldt, ldt_reserved;                          /*!<    Local descriptor table          */
+    uint16_t    debug_flag, io_map;                         /*!<    Trap bit and port permissions   */
+};
+
+/**
  * \brief Initialize and register a segment descriptor
  *
  * \param[in]   base    The base of the segment
@@ -96,6 +123,8 @@ void init_gdt_desc(uint32_t base, uint32_t limite, uint8_t access, uint8_t other
  * \brief Initialize the GDT
  */
 void init_gdt(void);
+
+struct tss default_tss;             /*!<    Default tss for FlowS   */
 
 #ifdef __KGDT_C_FILE__
     struct gdtdesc kgdt[GDT_SIZE];  /*!<    Slots for the GDT       */

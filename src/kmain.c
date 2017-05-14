@@ -8,6 +8,7 @@
 #include <kernel/idt.h>
 #include <kernel/pic.h>
 #include <kernel/io.h>
+#include <string.h>
 #include <stdio.h>
 
 int main(void);
@@ -18,6 +19,7 @@ void kernel_main(void)
     terminal_writeline("=== FlowS ===");
 
     hide_cursor();
+    cli;
 
     terminal_special("Initializing IDT...\n", TERMINAL_INFO);
     init_idt();
@@ -28,11 +30,23 @@ void kernel_main(void)
     terminal_special("Initializing GDT...\n", TERMINAL_INFO);
     init_gdt();
 
-    asm("movw $0x18, %ax \n \
-         movw %ax, %ss   \n \
+    // Initialize the tss
+    asm("movw $0x38, %ax    \n \
+         ltr %ax");
+    terminal_special("TR loaded\n", TERMINAL_INFO);
+
+    asm("movw $0x18, %ax    \n \
+         movw %ax, %ss      \n \
          movl $0x20000, %esp");
 
     main();
+}
+
+void task1(void)
+{
+    while(1);
+
+    return;
 }
 
 int main(void)
@@ -43,7 +57,29 @@ int main(void)
 
     terminal_special("kernel: Interrupts are allowed\n", TERMINAL_WARNING);
 
-    while(1);
+    // Copy the function to the correct address
+    memcpy((char*)0x30000, &task1, 100);
+
+    // Switch to ring 3 and jump to task1
+    terminal_special("kernel: Switching to ring 3 !\n", TERMINAL_WARNING);
+    asm("cli                        \n \
+         push $0x33                 \n \
+         push $0x30000              \n \
+         pushfl                     \n \
+         popl %%eax                 \n \
+         orl $0x200, %%eax          \n \
+         and $0xFFFFBFFF, %%eax     \n \
+         push %%eax                 \n \
+         push $0x23                 \n \
+         push $0x00                 \n \
+         movl $0x20000, %0          \n \
+         movw $0x2B, %%ax           \n \
+         movw %%ax, %%ds            \n \
+         iret" : "=m"(default_tss.esp0):);
+
+    // Never reached !
+    terminal_special("This should never be reached !\n", TERMINAL_ERROR);
+    asm("hlt");
 
     return 1;
 }
