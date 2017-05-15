@@ -25,6 +25,17 @@ extern "C" {
 int printf(const char* __restrict format, ...);
 
 /**
+ * \brief   Print a formatted string into another string
+ *
+ * \param[out]  out     String we want to write in
+ * \param[in]   format  Format of the string
+ * \param[in]   ...     Arguments for format specification
+ *
+ * \return  Number of characters written
+ */
+int sprintf(char* out, const char* __restrict format, ...);
+
+/**
  * \brief   Print a single char
  *
  * \param   c   Character to print
