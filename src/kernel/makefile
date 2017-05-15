@@ -1,6 +1,7 @@
 include $(MAKEINC)
 
-SRCS		= tty.c gdt.c idt.c interrupts.c pic.c cursor.c
+DEVICES 	= $(wildcard devices/*.c)
+SRCS		= tty.c gdt.c idt.c pic.c cursor.c irq.c isrs.c $(DEVICES)
 OBJECTS 	= $(SRCS:.c=.o) interrupts_asm.o
 
 TARGET 		= libkernel.a

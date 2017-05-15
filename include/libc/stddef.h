@@ -6,6 +6,8 @@
  * \brief   This file give new types with specific size.
  */
 
+#define NULL 0
+
 typedef unsigned long   size_t;     /*!<    Size_t can store the maximum size of a theoretically possible object of any type */
 
 typedef unsigned char   uint8_t;    /*<!    8 bits size     */

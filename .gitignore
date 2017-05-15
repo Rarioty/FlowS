@@ -32,6 +32,9 @@
 *.dSYM/
 *.su
 
+# Dependencies files
+*.depend
+
 # Remove user local makefile.inc
 makefile.inc
 

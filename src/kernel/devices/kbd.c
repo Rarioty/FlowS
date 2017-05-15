@@ -1,10 +1,96 @@
-#ifndef _KBD_H_
-#define _KBD_H_
+#include <kernel/devices.h>
+#include <kernel/ports.h>
+#include <kernel/tty.h>
+#include <kernel/idt.h>
+#include <kernel/irq.h>
+#include <kernel/io.h>
+#include <stdio.h>
 
-/**
- * \file    kbd.h
- * \brief   This file contains the french keyboard layout.
- */
+unsigned char kbdmap[];
+
+void keyboard_handler(struct regs* r)
+{
+    unsigned char i;
+    static int lshift_enable;
+    static int rshift_enable;
+    static int alt_enable;
+    static int ctrl_enable;
+
+    (void) r;
+
+    do {
+        i = inb(PORT_8042_STATUS_REGISTER);
+    } while ((i & 0x01) == 0);
+    i = inb(PORT_8042_DATA);
+    i--;
+
+    if (i < 0x80)
+    {
+        terminal_special("Key pressed: ", TERMINAL_INFO);
+        printf("%x (", i);
+        if (lshift_enable || rshift_enable)
+            printf("1 - ");
+        else
+            printf("0 - ");
+
+        if (alt_enable)
+            printf("1 - ");
+        else
+            printf("0 - ");
+
+        if (ctrl_enable)
+            printf("1) --> ");
+        else
+            printf("0) --> ");
+
+        switch(i)
+        {
+            case 0x29:
+                lshift_enable = 1;
+                break;
+            case 0x35:
+                rshift_enable = 1;
+                break;
+            case 0x1C:
+                ctrl_enable = 1;
+                break;
+            case 0x37:
+                alt_enable = 1;
+                break;
+            default:
+                putchar(kbdmap[i * 4 + (lshift_enable || rshift_enable) + ctrl_enable + alt_enable]);
+                break;
+        }
+
+        printf("\n");
+    }
+    else
+    {
+        i -= 0x80;
+        switch(i)
+        {
+            case 0x29:
+                lshift_enable = 0;
+                break;
+            case 0x35:
+                rshift_enable = 0;
+                break;
+            case 0x1C:
+                ctrl_enable = 0;
+                break;
+            case 0x37:
+                alt_enable = 0;
+                break;
+        }
+    }
+}
+
+void kbd_install()
+{
+    terminal_special("Initializing PS/2 keyboard driver\n", TERMINAL_INFO);
+
+    irq_install_handler(KEYBOARD_IRQ, keyboard_handler);
+}
 
 /**
  * \brief Map of a french keyboard
@@ -109,5 +195,3 @@ unsigned char kbdmap[] = {
     0xFF, 0xFF, 0xFF, 0xFF,     /* 0x60         */
     0xFF, 0xFF, 0xFF, 0xFF,     /* 0x61         */
 };
-
-#endif

@@ -3,9 +3,11 @@
 #endif
 
 #include <kernel/cursor.h>
+#include <kernel/devices.h>
 #include <kernel/tty.h>
 #include <kernel/gdt.h>
 #include <kernel/idt.h>
+#include <kernel/irq.h>
 #include <kernel/pic.h>
 #include <kernel/io.h>
 #include <string.h>
@@ -19,21 +21,23 @@ void kernel_main(void)
     terminal_writeline("=== FlowS ===");
 
     hide_cursor();
+
+    terminal_special("kernel: Clearing interrupts !\n", TERMINAL_WARNING);
     cli;
 
-    terminal_special("Initializing IDT...\n", TERMINAL_INFO);
+    terminal_special("kernel: Initializing IDT...\n", TERMINAL_INFO);
     init_idt();
 
-    terminal_special("Initializing PIC...\n", TERMINAL_INFO);
+    terminal_special("kernel: Initializing PIC...\n", TERMINAL_INFO);
     init_pic();
 
-    terminal_special("Initializing GDT...\n", TERMINAL_INFO);
+    terminal_special("kernel: Initializing GDT...\n", TERMINAL_INFO);
     init_gdt();
 
     // Initialize the tss
     asm("movw $0x38, %ax    \n \
          ltr %ax");
-    terminal_special("TR loaded\n", TERMINAL_INFO);
+    terminal_special("kernel: TR loaded\n", TERMINAL_INFO);
 
     asm("movw $0x18, %ax    \n \
          movw %ax, %ss      \n \
@@ -53,8 +57,12 @@ int main(void)
 {
     terminal_special("kernel: GDT loaded !\n", TERMINAL_INFO);
 
-    sti;
+    // Install devices
+    terminal_special("kernel: Installing devices...\n", TERMINAL_INFO);
+    kbd_install();
+    clock_install();
 
+    sti;
     terminal_special("kernel: Interrupts are allowed\n", TERMINAL_WARNING);
 
     // Copy the function to the correct address

@@ -61,6 +61,16 @@ struct idtr
     uint32_t base;              /*<!    Position in memory of the IDT   */
 } __attribute__((packed));
 
+struct regs
+{
+    unsigned int gs, fs, es, ds;
+    unsigned int edi, esi, ebp, esp, ebx, edx, ecx, eax;
+    unsigned int int_no, err_code;
+    unsigned int eip, cs, eflags, useresp, ss;
+};
+
+typedef void (*irq_handler_t) (struct regs *);
+
 struct idtr kidtr;              /*!<    IDT of the OS                   */
 struct idtdesc kidt[IDT_SIZE];  /*!<    Slots of interrupts             */
 
