@@ -15,8 +15,18 @@
 #define PRIMARY_DISK_IRQ        14
 #define SECONDARY_DISK_IRQ      15
 
+/**
+ * \brief   Install a handler for a specific irq
+ */
 void irq_install_handler(int irq, irq_handler_t handler);
+/**
+ * \brief   Remove the handler for a specific irq
+ */
 void irq_uninstall_handler(int irq);
+
+/**
+ * \brief   Install all irq in the IDT but this function does not install any handler !
+ */
 void irq_install(void);
 
 #endif

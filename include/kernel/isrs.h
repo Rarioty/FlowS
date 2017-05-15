@@ -3,8 +3,18 @@
 
 #include <kernel/idt.h>
 
-void isrs_install_handler(int irq, irq_handler_t handler);
-void isrs_uninstall_handler(int irq);
+/**
+ * \brief   Install handler for a specific isr
+ */
+void isrs_install_handler(int isr, irq_handler_t handler);
+/**
+ * \brief   Remove the handler of a specific isr
+ */
+void isrs_uninstall_handler(int isr);
+
+/**
+ * \brief   Install all isrs in the IDT but this function does not install any handler !
+ */
 void isrs_install(void);
 
 #endif

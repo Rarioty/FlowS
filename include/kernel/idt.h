@@ -61,6 +61,10 @@ struct idtr
     uint32_t base;              /*<!    Position in memory of the IDT   */
 } __attribute__((packed));
 
+/**
+ * \struct regs
+ * \brief   Structure to save registers when an irq pop
+ */
 struct regs
 {
     unsigned int gs, fs, es, ds;
@@ -69,6 +73,10 @@ struct regs
     unsigned int eip, cs, eflags, useresp, ss;
 };
 
+/**
+ * \typedef     irq_handler_t
+ * \brief       Type for irq handler function to get access to current state of all registers
+ */
 typedef void (*irq_handler_t) (struct regs *);
 
 struct idtr kidtr;              /*!<    IDT of the OS                   */
