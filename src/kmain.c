@@ -2,8 +2,9 @@
 #error "You need a ix86-elf compiler !"
 #endif
 
-#include <kernel/cursor.h>
+#include <kernel/syscalls.h>
 #include <kernel/devices.h>
+#include <kernel/cursor.h>
 #include <kernel/tty.h>
 #include <kernel/gdt.h>
 #include <kernel/idt.h>
@@ -48,8 +49,18 @@ void kernel_main(void)
 
 void task1(void)
 {
-    while(1);
+    char *msg = (char*) 0x100; /* le message sera stocké en 0x30100 */
+    msg[0] = 't';
+    msg[1] = 'a';
+    msg[2] = 's';
+    msg[3] = 'k';
+    msg[4] = '1';
+    msg[5] = '\n';
+    msg[6] = 0;
 
+    asm("mov %0, %%ebx; mov $0x00, %%eax; int $0x30" :: "m" (msg));
+
+    while(1);
     return;
 }
 
@@ -57,8 +68,9 @@ int main(void)
 {
     terminal_special("kernel: GDT loaded !\n", TERMINAL_INFO);
 
-    // Install devices
+    // Install hardware devices
     terminal_special("kernel: Installing devices...\n", TERMINAL_INFO);
+    syscalls_install();
     kbd_install();
     clock_install();
 

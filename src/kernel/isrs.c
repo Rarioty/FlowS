@@ -38,7 +38,7 @@ extern void _asm_isr_28();
 extern void _asm_isr_29();
 extern void _asm_isr_30();
 extern void _asm_isr_31();
-extern void _asm_isr_127();
+extern void _asm_isr_48();
 
 char *exception_messages[] = {
 	"Division by zero",				/* 0 */
@@ -140,7 +140,9 @@ void isrs_install(void)
     init_idt_desc(0x08, (uint32_t) _asm_isr_29, INTGATE, &kidt[29]);
     init_idt_desc(0x08, (uint32_t) _asm_isr_30, INTGATE, &kidt[30]);
     init_idt_desc(0x08, (uint32_t) _asm_isr_31, INTGATE, &kidt[31]);
-    init_idt_desc(0x08, (uint32_t) _asm_isr_127, INTGATE, &kidt[127]);
+
+	// Interrupt for syscalls
+    init_idt_desc(0x08, (uint32_t) _asm_isr_48, TRAPGATE, &kidt[48]);
 
     isrs_install_handler(14, page_fault);
 }
