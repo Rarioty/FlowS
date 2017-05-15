@@ -27,7 +27,7 @@ void keyboard_handler(struct regs* r)
     if (i < 0x80)
     {
         terminal_special("Key pressed: ", TERMINAL_INFO);
-        printf("%x (", i);
+        printf("%02X (", i);
         if (lshift_enable || rshift_enable)
             printf("1 - ");
         else

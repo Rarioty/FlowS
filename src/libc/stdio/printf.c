@@ -1,132 +1,212 @@
 #include <stdio.h>
-#include <string.h>
-#include <stdbool.h>
 #include <stdarg.h>
 #include <stddef.h>
-#include <limits.h>
 
-static bool print(const char* data, size_t length)
+static void printchar(char** str, int c)
 {
-    const unsigned char* bytes = (const unsigned char*)data;
-    for (size_t i = 0; i < length; ++i)
+    if (str)
     {
-        if (putchar(bytes[i]) == EOF)
-            return false;
+        **str = c;
+        ++(*str);
     }
-
-    return true;
+    else
+        putchar(c);
 }
 
-static bool dump(unsigned char* addr, int n)
-{
-    char c1, c2;
-    char* tab = "0123456789ABCDEF";
+#define PAD_RIGHT   1
+#define PAD_ZERO    2
 
-    while (n--)
+static int prints(char** out, const char* string, int width, int pad)
+{
+    register int pc = 0, padchar = ' ';
+
+    if (width > 0)
     {
-        c1 = tab[(*addr & 0xF0) >> 4];
-        c2 = tab[*addr & 0x0F];
-        addr++;
-        putchar(c1);
-        putchar(c2);
+        register int len = 0;
+        register const char* ptr;
+        for (ptr = string; *ptr; ++ptr)
+            ++len;
+        if (len >= width)
+            width = 0;
+        else
+            width -= len;
+
+        if (pad & PAD_ZERO)
+            padchar = '0';
     }
 
-    return true;
+    if (!(pad & PAD_RIGHT))
+    {
+        for (; width > 0; --width)
+        {
+            printchar(out, padchar);
+            ++pc;
+        }
+    }
+    for (; *string; ++string)
+    {
+        printchar(out, *string);
+        ++pc;
+    }
+    for (; width > 0; --width)
+    {
+        printchar(out, padchar);
+        ++pc;
+    }
+
+    return pc;
 }
 
-int printf(const char* restrict format, ...)
+// The following should be enough for 32 bit int
+#define PRINT_BUF_LEN   12
+
+static int printi(char** out, int i, int b, int sg, int width, int pad, int letbase)
 {
-    va_list parameters;
-    va_start(parameters, format);
+    char print_buf[PRINT_BUF_LEN];
+    register char* s;
+    register int t, neg = 0, pc = 0;
+    register unsigned int u = i;
 
-    int written = 0;
-
-    while (*format != '\0')
+    if (i == 0)
     {
-        size_t maxrem = INT_MAX - written;
+        print_buf[0] = '0';
+        print_buf[1] = '\0';
+        return prints(out, print_buf, width, pad);
+    }
 
-        if (format[0] != '%' || format[1] == '%')
+    if (sg && b == 10 && i < 0)
+    {
+        neg = 1;
+        u = -i;
+    }
+
+    s = print_buf + PRINT_BUF_LEN-1;
+    *s = '\0';
+
+    while (u)
+    {
+        t = u % b;
+        if (t >= 10)
+            t += letbase - '0' - 10;
+        *--s = t + '0';
+        u /= b;
+    }
+
+    if (neg)
+    {
+        if (width && (pad & PAD_ZERO))
         {
-            if (format[0] == '%')
-                format++;
-            size_t amount = 1;
-            while (format[amount] && format[amount] != '%')
-                amount++;
-
-            if (maxrem < amount)
-            {
-                // TODO: Set errno to EOVERFLOW.
-                return -1;
-            }
-
-            if (!print(format, amount))
-                return -1;
-
-            format += amount;
-            written += amount;
-            continue;
+            printchar(out, '-');
+            ++pc;
+            --width;
         }
+        else
+            *--s = '-';
+    }
 
-        const char* format_begun_at = format++;
+    return pc + prints(out, s, width, pad);
+}
 
-        if (*format == 'c')
-        {
-            format++;
-            char c = (char) va_arg(parameters, int /* char promotes to int */);
-            if (!maxrem)
-            {
-                // TODO: Set errorno to EOVERFLOW.
-                return -1;
-            }
-            if (!print(&c, sizeof(c)))
-                return -1;
+static int print(char** out, const char* format, va_list varg)
+{
+    register int width, pad;
+    register int pc = 0;
+    char scr[2];
 
-            written++;
-        }
-        else if (*format == 's')
+    for (; *format != 0; ++format)
+    {
+        if (*format == '%')
         {
-            format++;
-            const char* str = va_arg(parameters, const char*);
-            size_t len = strlen(str);
-            if (maxrem < len)
+            ++format;
+            width = pad = 0;
+            if (*format == '\0')
+                break;
+            if (*format == '%')
+                goto out;
+            if (*format == '-')
             {
-                // TODO: Set errno to EOVERFLOW.
-                return -1;
+                ++format;
+                pad = PAD_RIGHT;
             }
-            if (!print(str, len))
-                return -1;
-            written += len;
-        }
-        else if (*format == 'x')
-        {
-            format++;
-            uint32_t val = va_arg(parameters, uint32_t);
-            if (maxrem < sizeof(uint32_t))
+            while (*format == '0')
             {
-                // TODO: set errno to EOVERFLOW.
-                return -1;
+                ++format;
+                pad |= PAD_ZERO;
             }
-            if (!dump((unsigned char*)&val, sizeof(val)))
-                return -1;
-            written += sizeof(val);
+
+            for (; *format >= '0' && *format <= '9'; ++format)
+            {
+                width *= 10;
+                width += *format - '0';
+            }
+
+            if (*format == 's')
+            {
+                register char *s = va_arg(varg, char*);
+                pc += prints(out, s ? s : "(null)", width, pad);
+                continue;
+            }
+            if (*format == 'd')
+            {
+                pc += printi(out, va_arg(varg, uint32_t), 10, 1, width, pad, 'a');
+                continue;
+            }
+            if (*format == 'x')
+            {
+                pc += printi(out, va_arg(varg, uint32_t), 16, 0, width, pad, 'a');
+                continue;
+            }
+            if (*format == 'X')
+            {
+                pc += printi(out, va_arg(varg, uint32_t), 16, 0, width, pad, 'A');
+                continue;
+            }
+            if (*format == 'u')
+            {
+                pc += printi(out, va_arg(varg, uint32_t), 10, 0, width, pad, 'a');
+                continue;
+            }
+            if (*format == 'c')
+            {
+                /* char are converted to int then pushed on the stack */
+                scr[0] = va_arg(varg, char);
+                scr[1] = '\0';
+                pc += prints(out, scr, width, pad);
+                continue;
+            }
         }
         else
         {
-            format = format_begun_at;
-            size_t len = strlen(format);
-            if (maxrem < len)
-            {
-                // TODO: Set errno to EOVERFLOW.
-                return -1;
-            }
-            if (!print(format, len))
-                return -1;
-
-            written += len;
-            format += len;
+            out:
+            printchar(out, *format);
+            ++pc;
         }
     }
 
-    va_end(parameters);
-    return written;
+    if (out)
+        **out = '\0';
+
+    return pc;
+}
+
+int printf(const char* format, ...)
+{
+    va_list args;
+    va_start(args, format);
+
+    int pc = print(0, format, args);
+
+    va_end(args);
+    return pc;
+}
+
+int sprintf(char* out, const char* format, ...)
+{
+    va_list args;
+    va_start(args, format);
+
+    int pc = print(&out, format, args);
+
+    va_end(args);
+    return pc;
 }
