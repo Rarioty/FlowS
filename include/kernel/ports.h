@@ -33,4 +33,14 @@
 #define PORT_8259_PIC_SLAVE_COMMAND     0xA0
 #define PORT_8259_PIC_SLAVE_DATA        0xA1
 
+/************************************************************
+ *              8253/8254          PIT                      *
+ * url: http://wiki.osdev.org/Programmable_Interval_Timer   *
+ ************************************************************/
+
+#define PORT_PIT_CHANNEL_0              0x40
+#define PORT_PIT_CHANNEL_1              0x41
+#define PORT_PIT_CHANNEL_2              0x42
+#define PORT_PIT_COMMAND                0x43
+
 #endif
