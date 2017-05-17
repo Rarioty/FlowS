@@ -1,3 +1,4 @@
+#include <kernel/scheduler.h>
 #include <kernel/devices.h>
 #include <kernel/ports.h>
 #include <kernel/tty.h>
@@ -65,15 +66,13 @@ void clock_set_phase(int hz)
 
 void clock_handler(struct regs* r)
 {
+    schedule(r);
+
     if (++timer_subticks == PIT_SUBTICKS_PER_TICK)
     {
         timer_ticks++;
         timer_subticks = 0;
-
-        putchar('.');
     }
-
-    (void) r;
 }
 
 void clock_install(void)

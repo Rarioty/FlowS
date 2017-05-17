@@ -1,26 +1,3 @@
-extern isr_default_int
-global _asm_default_int
-
-%macro	SAVE_REGS 0
-	pushad
-	push ds
-	push es
-	push fs
-	push gs
-	push ebx
-	mov bx,0x10
-	mov ds,bx
-	pop ebx
-%endmacro
-
-%macro	RESTORE_REGS 0
-	pop gs
-	pop fs
-	pop es
-	pop ds
-	popad
-%endmacro
-
 %macro DEFINE_IRQ_ENTRY 2
 	global _asm_irq_%1
 	_asm_irq_%1:
@@ -49,6 +26,7 @@ global _asm_default_int
 
 extern irq_handler
 irq_common_stub:
+	cli
 	pusha
 	push ds
 	push es
@@ -62,6 +40,7 @@ irq_common_stub:
 	mov eax, esp
 	push eax
 	mov eax, irq_handler
+	mov ecx, ebp
 	call eax
 	pop eax
 	pop gs
@@ -72,10 +51,12 @@ irq_common_stub:
 	add esp, 8
 	mov al, 0x20
 	out 0x20, al
+	sti
 	iret
 
 extern fault_handler
 isr_common_stub:
+	cli
 	pusha
 	push ds
 	push es
@@ -97,15 +78,10 @@ isr_common_stub:
 	pop ds
 	popa
 	add esp, 8
+	mov al, 0x20
+	out 0x20, al
+	sti
 	iret
-
-_asm_default_int:
-    SAVE_REGS
-    call isr_default_int
-    mov al, 0x20
-    out 0x20, al
-    RESTORE_REGS
-    iret
 
 DEFINE_IRQ_ENTRY	0, 32
 DEFINE_IRQ_ENTRY	1, 33

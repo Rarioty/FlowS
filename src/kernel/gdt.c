@@ -141,7 +141,7 @@ void init_gdt(void)
       *                                 --
       *                                0xD
       */
-     init_gdt_desc(0x030000, 0x01, 0xFF, 0x0D, &kgdt[4]);
+     init_gdt_desc(0x0, 0xFFFFF, 0xFF, 0x0D, &kgdt[4]);
 
     /*
      * User data segment
@@ -168,7 +168,7 @@ void init_gdt(void)
      *                                 --
      *                                0xD
      */
-    init_gdt_desc(0x030000, 0x01, 0xF3, 0x0D, &kgdt[5]);
+    init_gdt_desc(0x0, 0xFFFFF, 0xF3, 0x0D, &kgdt[5]);
 
     /*
      * User stack segment
@@ -195,7 +195,7 @@ void init_gdt(void)
      *                                 --
      *                                0xD
      */
-    init_gdt_desc(0x030000, 0x10, 0xF7, 0x0D, &kgdt[6]);
+    init_gdt_desc(0x0, 0x0, 0xF7, 0x0D, &kgdt[6]);
 
     /*
      * Task state segment

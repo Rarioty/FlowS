@@ -3,6 +3,11 @@
 
 #include <kernel/idt.h>
 
+/**
+ * \file    irq.h
+ * \brief   This file handle the sixteen interrupt requests and their handlers
+ */
+
 #define CLOCK_IRQ               0
 #define KEYBOARD_IRQ            1
 #define SERIAL_PORT_1_IRQ       3

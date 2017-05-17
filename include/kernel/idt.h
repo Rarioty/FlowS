@@ -6,6 +6,7 @@
  * \brief   This file handle the interrupt descriptor table.
  */
 
+ #include <kernel/utils/registers.h>
 #include <kernel/memory_map.h>
 #include <stddef.h>
 
@@ -62,22 +63,10 @@ struct idtr
 } __attribute__((packed));
 
 /**
- * \struct regs
- * \brief   Structure to save registers when an irq pop
- */
-struct regs
-{
-    unsigned int gs, fs, es, ds;
-    unsigned int edi, esi, ebp, esp, ebx, edx, ecx, eax;
-    unsigned int int_no, err_code;
-    unsigned int eip, cs, eflags, useresp, ss;
-};
-
-/**
  * \typedef     irq_handler_t
  * \brief       Type for irq handler function to get access to current state of all registers
  */
-typedef void (*irq_handler_t) (struct regs *);
+typedef void (*irq_handler_t) (irq_registers*);
 
 struct idtr kidtr;              /*!<    IDT of the OS                   */
 struct idtdesc kidt[IDT_SIZE];  /*!<    Slots of interrupts             */

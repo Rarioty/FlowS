@@ -1,4 +1,6 @@
 #include <kernel/irq.h>
+
+#include <kernel/utils/registers.h>
 #include <kernel/idt.h>
 #include <kernel/io.h>
 
@@ -31,10 +33,9 @@ void irq_uninstall_handler(int irq)
     irq_routines[irq] = NULL;
 }
 
-void irq_handler(struct regs* r)
+void irq_handler(irq_registers* r)
 {
-    cli;
-    void (*handler)(struct regs *r);
+    void (*handler)(irq_registers *r);
     if (r->int_no > 47 || r->int_no < 32)
         handler = NULL;
     else
@@ -42,7 +43,6 @@ void irq_handler(struct regs* r)
 
     if (handler)
         handler(r);
-    sti;
 }
 
 void irq_install(void)

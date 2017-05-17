@@ -1,4 +1,6 @@
 #include <kernel/syscalls.h>
+
+#include <kernel/utils/registers.h>
 #include <kernel/isrs.h>
 #include <kernel/gdt.h>
 #include <kernel/tty.h>
@@ -16,23 +18,16 @@ static uintptr_t syscalls[] = {
 };
 uint32_t num_syscalls;
 
-void syscall_handler(struct regs* r)
+void syscall_handler(irq_registers* r)
 {
     // Check if the syscall number is valid
     if (r->eax >= num_syscalls)
         return;
 
     uintptr_t location = syscalls[r->eax];
-    uint32_t  ds_base;
-    struct gdtdesc* ds;
 
     if (location == 1)
         return;
-
-    ds = (struct gdtdesc *) (GDT_BASE + (r->ds & 0xF8));
-    ds_base = ds->base0_15 + (ds->base16_23 << 16) + (ds->base24_31 << 24);
-
-    r->ebx += ds_base;
 
     uint32_t ret;
     asm volatile("push %1       \n  \

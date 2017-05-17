@@ -1,4 +1,6 @@
 #include <kernel/isrs.h>
+
+#include <kernel/utils/registers.h>
 #include <kernel/idt.h>
 #include <kernel/io.h>
 #include <stdio.h>
@@ -87,23 +89,17 @@ void isrs_uninstall_handler(int irq)
     isrs_routines[irq] = NULL;
 }
 
-void fault_handler(struct regs* r)
+void fault_handler(irq_registers* r)
 {
-    cli;
-    void (*handler)(struct regs *r);
+    void (*handler)(irq_registers *r);
     handler = isrs_routines[r->int_no];
     if (handler)
         handler(r);
     else
+	{
         printf("Unhandled exception: [%d] %s\n", r->int_no, exception_messages[r->int_no]);
-    sti;
-}
-
-void page_fault(struct regs* r)
-{
-    (void) r;
-    printf("GP fault !\n");
-    while(1);
+		while (1);
+	}
 }
 
 void isrs_install(void)
@@ -143,6 +139,4 @@ void isrs_install(void)
 
 	// Interrupt for syscalls
     init_idt_desc(0x08, (uint32_t) _asm_isr_48, TRAPGATE, &kidt[48]);
-
-    isrs_install_handler(14, page_fault);
 }

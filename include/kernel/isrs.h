@@ -4,6 +4,11 @@
 #include <kernel/idt.h>
 
 /**
+ * \file    isrs.h
+ * \brief   This file handle errors interrupts requests and the system call request
+ */ 
+
+/**
  * \brief   Install handler for a specific isr
  */
 void isrs_install_handler(int isr, irq_handler_t handler);

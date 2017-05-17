@@ -23,12 +23,6 @@ void init_idt_desc(uint16_t select, uint32_t offset, uint16_t type, struct idtde
 
 void init_idt(void)
 {
-    int i;
-    for (i = 0; i < IDT_SIZE; ++i)
-    {
-        init_idt_desc(0x08, (uint32_t) _asm_default_int, INTGATE, &kidt[i]);
-    }
-
     irq_install();
     isrs_install();
 

@@ -26,6 +26,9 @@
  *  -----     ---       ----                        -----------
  *  0x0500    0x0CF8    0xFF * 8 bytes (0x7F8)      GDT
  *  0x0D00    0x14F8    0xFF * 8 bytes (0x7F8)      IDT
+ *  0x20000   0x21000   0x1000                      Page directory
+ *  0x21000   0x22000   0x1000                      Page table n°0
+ *  ...                 0x1000                      Other page tables
  *  \endverbatim
  *
  *  <h2>BIOS Data Area (BDA)</h2>
