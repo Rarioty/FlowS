@@ -1,5 +1,6 @@
 #include <kernel/utils/registers.h>
 #include <kernel/interrupts/isrs.h>
+#include <kernel/process/panic.h>
 #include <stddef.h>
 #include <stdio.h>
 
@@ -45,7 +46,8 @@ void general_protection_fault(irq_registers* r)
 	else if (tbl == 3)
 		printf("    Descriptor: IDT\n");
 	printf("    Index:      0x%X\n", index);
-	while(1);
+
+	PANIC("General protection fault dump", r);
 }
 
 char* get_page_frame(void)

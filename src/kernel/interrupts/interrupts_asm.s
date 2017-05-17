@@ -26,7 +26,6 @@
 
 extern irq_handler
 irq_common_stub:
-	cli
 	pusha
 	push ds
 	push es
@@ -51,12 +50,10 @@ irq_common_stub:
 	add esp, 8
 	mov al, 0x20
 	out 0x20, al
-	sti
 	iret
 
 extern fault_handler
 isr_common_stub:
-	cli
 	pusha
 	push ds
 	push es
@@ -80,7 +77,6 @@ isr_common_stub:
 	add esp, 8
 	mov al, 0x20
 	out 0x20, al
-	sti
 	iret
 
 DEFINE_IRQ_ENTRY	0, 32
