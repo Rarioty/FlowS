@@ -6,8 +6,8 @@
  * \brief   This file handle the interrupt descriptor table.
  */
 
- #include <kernel/utils/registers.h>
-#include <kernel/memory_map.h>
+#include <kernel/memory/memory_map.h>
+#include <kernel/utils/registers.h>
 #include <stddef.h>
 
 #define IDT_BASE    MEMORY_MAP_IDT_POSITION         /*!<    Base of the IDT                             */

@@ -6,7 +6,7 @@
  * \brief   This file handle the global descriptor table.
  */
 
-#include <kernel/memory_map.h>
+#include <kernel/memory/memory_map.h>
 #include <stddef.h>
 
 #define GDT_BASE    MEMORY_MAP_GDT_POSITION     /*!<    Physical address of the gdt in memory               */

@@ -1,10 +1,10 @@
 #include <kernel/utils/registers.h>
-#include <kernel/isrs.h>
+#include <kernel/interrupts/isrs.h>
 #include <stddef.h>
 #include <stdio.h>
 
 #define __MM__
-#include <kernel/mm.h>
+#include <kernel/memory/mm.h>
 
 uint32_t*   page_directory;
 uint32_t*   first_page_table;

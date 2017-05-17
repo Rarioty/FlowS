@@ -1,6 +1,7 @@
 #include <kernel/cursor.h>
-#include <kernel/ports.h>
-#include <kernel/io.h>
+
+#include <kernel/memory/ports.h>
+#include <kernel/memory/io.h>
 
 void move_cursor(uint8_t x, uint8_t y)
 {

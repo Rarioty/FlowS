@@ -1,9 +1,11 @@
-#include <kernel/scheduler.h>
 #include <kernel/devices.h>
-#include <kernel/ports.h>
+
+#include <kernel/process/scheduler.h>
+#include <kernel/utils/registers.h>
+#include <kernel/interrupts/irq.h>
+#include <kernel/memory/ports.h>
+#include <kernel/memory/io.h>
 #include <kernel/tty.h>
-#include <kernel/irq.h>
-#include <kernel/io.h>
 #include <stdio.h>
 
 #define PIT_SCALE                   1193180
@@ -64,7 +66,7 @@ void clock_set_phase(int hz)
     outb(PORT_PIT_CHANNEL_0,    (divisor >> 8) & 0xFF);
 }
 
-void clock_handler(struct regs* r)
+void clock_handler(irq_registers* r)
 {
     schedule(r);
 

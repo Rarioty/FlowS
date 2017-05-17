@@ -1,8 +1,8 @@
-#include <kernel/scheduler.h>
-#include <kernel/process.h>
-#include <kernel/gdt.h>
-#include <stddef.h>
+#include <kernel/process/scheduler.h>
 
+#include <kernel/process/process.h>
+#include <kernel/memory/gdt.h>
+#include <stddef.h>
 #include <stdio.h>
 
 void schedule(irq_registers* r)

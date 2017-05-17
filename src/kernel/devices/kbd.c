@@ -1,14 +1,16 @@
 #include <kernel/devices.h>
-#include <kernel/ports.h>
+
+#include <kernel/utils/registers.h>
+#include <kernel/interrupts/idt.h>
+#include <kernel/interrupts/irq.h>
+#include <kernel/memory/ports.h>
+#include <kernel/memory/io.h>
 #include <kernel/tty.h>
-#include <kernel/idt.h>
-#include <kernel/irq.h>
-#include <kernel/io.h>
 #include <stdio.h>
 
 unsigned char kbdmap[];
 
-void keyboard_handler(struct regs* r)
+void keyboard_handler(irq_registers* r)
 {
     unsigned char i;
     static int lshift_enable;

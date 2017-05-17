@@ -2,17 +2,17 @@
 #error "You need a ix86-elf compiler !"
 #endif
 
-#include <kernel/syscalls.h>
-#include <kernel/process.h>
+#include <kernel/process/syscalls.h>
+#include <kernel/process/process.h>
+#include <kernel/interrupts/idt.h>
+#include <kernel/interrupts/irq.h>
+#include <kernel/interrupts/pic.h>
+#include <kernel/memory/gdt.h>
+#include <kernel/memory/mm.h>
+#include <kernel/memory/io.h>
 #include <kernel/devices.h>
 #include <kernel/cursor.h>
 #include <kernel/tty.h>
-#include <kernel/gdt.h>
-#include <kernel/idt.h>
-#include <kernel/irq.h>
-#include <kernel/pic.h>
-#include <kernel/mm.h>
-#include <kernel/io.h>
 #include <string.h>
 #include <stdio.h>
 

@@ -1,8 +1,8 @@
-#include <kernel/idt.h>
-#include <kernel/isrs.h>
-#include <kernel/irq.h>
-#include <kernel/tty.h>
+#include <kernel/interrupts/idt.h>
 
+#include <kernel/interrupts/isrs.h>
+#include <kernel/interrupts/irq.h>
+#include <kernel/tty.h>
 #include <string.h>
 #include <stddef.h>
 

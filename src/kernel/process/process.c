@@ -1,8 +1,8 @@
-#include <kernel/mm.h>
+#include <kernel/memory/mm.h>
 #include <string.h>
 
 #define __PLIST__
-#include <kernel/process.h>
+#include <kernel/process/process.h>
 
 void load_task(uint32_t* code_phys_addr, uint32_t* fn, unsigned int code_size)
 {

@@ -1,7 +1,7 @@
 #ifndef _IRQ_H_
 #define _IRQ_H_
 
-#include <kernel/idt.h>
+#include <kernel/interrupts/idt.h>
 
 /**
  * \file    irq.h

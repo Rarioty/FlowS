@@ -1,8 +1,8 @@
-#include <kernel/irq.h>
+#include <kernel/interrupts/irq.h>
 
 #include <kernel/utils/registers.h>
-#include <kernel/idt.h>
-#include <kernel/io.h>
+#include <kernel/interrupts/idt.h>
+#include <kernel/memory/io.h>
 
 extern void _asm_irq_0(void);
 extern void _asm_irq_1(void);

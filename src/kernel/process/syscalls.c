@@ -1,8 +1,8 @@
-#include <kernel/syscalls.h>
+#include <kernel/process/syscalls.h>
 
 #include <kernel/utils/registers.h>
-#include <kernel/isrs.h>
-#include <kernel/gdt.h>
+#include <kernel/interrupts/isrs.h>
+#include <kernel/memory/gdt.h>
 #include <kernel/tty.h>
 #include <stddef.h>
 #include <stdio.h>

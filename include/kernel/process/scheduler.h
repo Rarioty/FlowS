@@ -2,7 +2,7 @@
 #define _SCHEDULER_H_
 
 #include <kernel/utils/registers.h>
-#include <kernel/idt.h>
+#include <kernel/interrupts/idt.h>
 
 /**
  * \file    scheduler.h

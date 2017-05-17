@@ -1,6 +1,7 @@
-#include <kernel/ports.h>
-#include <kernel/pic.h>
-#include <kernel/io.h>
+#include <kernel/interrupts/pic.h>
+
+#include <kernel/memory/ports.h>
+#include <kernel/memory/io.h>
 
 void init_pic(void)
 {

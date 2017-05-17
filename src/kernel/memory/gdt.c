@@ -1,5 +1,5 @@
 #define __KGDT_C_FILE__
-#include <kernel/gdt.h>
+#include <kernel/memory/gdt.h>
 
 #include <string.h>
 
