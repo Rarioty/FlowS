@@ -42,7 +42,7 @@ void terminal_scroll()
 
     for (size_t index = max+1; index < VGA_WIDTH * VGA_HEIGHT-1; ++index)
     {
-        terminal_buffer[index] = vga_entry(' ', terminal_color);
+        terminal_buffer[index] = vga_entry(' ', base_color);
     }
 }
 

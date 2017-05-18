@@ -114,8 +114,8 @@ int main(void)
     terminal_special("kernel: Creating tasks...", TERMINAL_WARNING);
 
     // Load tasks
-    load_task((uint32_t*) 0x200000, (uint32_t*) &task1, 0x2000);
-    load_task((uint32_t*) 0x300000, (uint32_t*) &task2, 0x2000);
+    // load_task((uint32_t*) 0x200000, (uint32_t*) &task1, 0x2000);
+    // load_task((uint32_t*) 0x300000, (uint32_t*) &task2, 0x2000);
 
     terminal_special("DONE\n", TERMINAL_WARNING);
 
