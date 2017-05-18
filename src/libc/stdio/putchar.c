@@ -10,6 +10,7 @@ int putchar(int ic) {
     terminal_write(&c, sizeof(c));
 #else
     // TODO: Implement stdio and the write system call.
+    #error "Implement me before goind to userland !"
 #endif
 
     return ic;

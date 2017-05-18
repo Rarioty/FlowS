@@ -17,6 +17,13 @@ struct process
 {
     uint32_t    pid;            /*!<    Process ID                  */
     process_registers regs;     /*!<    Process registers state     */
+
+    // User stack
+    struct
+    {
+        uint32_t    esp0;
+        uint16_t    ss0;
+    } user_stack __attribute__((packed));
 } __attribute__((packed));
 
 #ifdef __PLIST__

@@ -5,7 +5,7 @@ UTILS_SRCS 		= $(wildcard utils/*.c)
 INTERRUPTS_SRCS	= $(wildcard interrupts/*.c)
 MEMORY_SRCS		= $(wildcard memory/*.c)
 PROCESS_SRCS 	= $(wildcard process/*.c)
-SRCS			= tty.c cursor.c $(DEVICES_SRCS) $(UTILS_SRCS) $(INTERRUPTS_SRCS) $(MEMORY_SRCS) $(PROCESS_SRCS)
+SRCS			= tty.c cursor.c multiboot.c $(DEVICES_SRCS) $(UTILS_SRCS) $(INTERRUPTS_SRCS) $(MEMORY_SRCS) $(PROCESS_SRCS)
 OBJECTS 		= $(SRCS:.c=.o) interrupts/interrupts_asm.o process/scheduler_asm.o
 
 TARGET 		= libkernel.a

@@ -10,6 +10,7 @@
 #include <kernel/memory/gdt.h>
 #include <kernel/memory/mm.h>
 #include <kernel/memory/io.h>
+#include <kernel/multiboot.h>
 #include <kernel/devices.h>
 #include <kernel/cursor.h>
 #include <kernel/tty.h>
@@ -18,10 +19,13 @@
 
 int main(void);
 
-void kernel_main(void)
+void kernel_main(struct multiboot_infos* multiboot_header)
 {
     terminal_initialize();
-    terminal_writeline("          === FlowS ===");
+    terminal_writeline("FlowS loading...");
+
+    // Set multiboot infos
+    load_multiboot_infos(multiboot_header);
 
     hide_cursor();
 

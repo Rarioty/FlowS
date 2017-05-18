@@ -31,6 +31,13 @@
  *  ...                 0x1000                      Other page tables
  *  \endverbatim
  *
+ * <h2>FlowS upper memory</h2>
+ * \verbatim
+ *  Start     End       size                        Description
+ *  -----     ---       ----                        -----------
+ *  0x100000  0x200000  0x100000                    Kernel position
+ * \endverbatim
+ *
  *  <h2>BIOS Data Area (BDA)</h2>
  *  url: http://www.bioscentral.com/misc/bda.htm
  *  \verbatim

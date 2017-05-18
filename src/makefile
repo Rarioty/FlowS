@@ -4,7 +4,7 @@ SRCS	= kmain.c
 OBJECTS = kmain.o
 OBJLIBS = \
 	libboot.a		\
-	libc.a			\
+	libk.a			\
 	libkernel.a
 
 LDFLAGS := -T link.ld -melf_i386
@@ -34,7 +34,7 @@ libboot.a: force_look
 	$(ECHO) "Generating libboot.a"
 	cd boot; $(MAKE) $(MFLAGS)
 
-libc.a: force_look
+libk.a: force_look
 	$(ECHO) "Generating libc.a"
 	cd libc; $(MAKE) $(MFLAGS)
 
