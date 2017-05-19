@@ -19,6 +19,9 @@ sources: depend
 	$(ECHO) "DONE"
 
 depend:
+	mkdir -p libs
+	mkdir -p doc
+	mkdir -p bin
 	cd src; $(MAKE) $(MFLAGS) depend
 
 os.iso: sources
@@ -46,6 +49,8 @@ clean:
 	$(ECHO) "Cleaning launched"
 	rm -rf bin/os.iso
 	cd src; $(MAKE) $(MFLAGS) clean
+	rm -rf libs
 
 purge: clean
 	cd src; $(MAKE) $(MFLAGS) purge
+	rm -rf doc
