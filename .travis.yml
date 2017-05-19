@@ -3,5 +3,6 @@ language: C
 before_install:
     - sudo apt-get -qq update
     - sudo apt-get install -y doxygen
+    - cp $(TRAVIS_BUILD_DIR)/makefile_no_cross_compiler.inc.default $(TRAVIS_BUILD_DIR)/makefile.inc
 
 script: make && make docs
