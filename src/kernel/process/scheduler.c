@@ -16,8 +16,8 @@ void switch_to_task(int pid, int mode)
     current = &p_list[pid];
 
     // Load the tss
-    default_tss.ss0     = current->user_stack.ss0;
-    default_tss.esp0    = current->user_stack.esp0;
+    default_tss.ss0     = current->kernel_stack.ss0;
+    default_tss.esp0    = current->kernel_stack.esp0;
 
     /*
      * Stock the ss, esp, eflags, cs and eip registers which are necessary
@@ -32,8 +32,8 @@ void switch_to_task(int pid, int mode)
 
     if (mode == USER_MODE)
     {
-        kernel_ss     = current->user_stack.ss0;
-        kernel_stack  = current->user_stack.esp0;
+        kernel_ss     = current->kernel_stack.ss0;
+        kernel_stack  = current->kernel_stack.esp0;
     }
     else    // Kernel mode
     {
@@ -60,6 +60,8 @@ void switch_to_task(int pid, int mode)
 void schedule(irq_registers* r)
 {
     struct process* p;
+    uint32_t i;
+    int newpid;
 
     // If there is a ready process and no one is loaded, launch it !
     if (current == 0 && n_proc)
@@ -98,19 +100,32 @@ void schedule(irq_registers* r)
         }
 
         // Save the tss
-        current->user_stack.ss0     = default_tss.ss0;
-        current->user_stack.esp0    = default_tss.esp0;
-
-        // Simple round-robin for new process
-        if (n_proc > current->pid + 1)
-            p = &p_list[current->pid+1];
-        else
-            p = &p_list[0];
-
-        // Switch now
-        if (p->regs.cs != 0x8)
-            switch_to_task(p->pid, USER_MODE);
-        else
-            switch_to_task(p->pid, KERNEL_MODE);
+        current->kernel_stack.ss0     = default_tss.ss0;
+        current->kernel_stack.esp0    = default_tss.esp0;
     }
+
+    // Choose new process
+    newpid = 0;
+    for (i = current->pid + 1; i < MAX_PID && newpid == 0; ++i)
+    {
+        if (p_list[i].state == 1)
+            newpid = i;
+    }
+
+    if (!newpid)
+    {
+        for (i = 1; i < current->pid && newpid == 0; ++i)
+        {
+            if (p_list[i].state == 1)
+                newpid = i;
+        }
+    }
+
+    p = &p_list[newpid];
+
+    // Switch now
+    if (p->regs.cs != 0x8)
+        switch_to_task(p->pid, USER_MODE);
+    else
+        switch_to_task(p->pid, KERNEL_MODE);
 }

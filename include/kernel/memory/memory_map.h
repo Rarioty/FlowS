@@ -26,6 +26,7 @@
  *  -----     ---       ----                        -----------
  *  0x0500    0x0CF8    0xFF * 8 bytes (0x7F8)      GDT
  *  0x0D00    0x14F8    0xFF * 8 bytes (0x7F8)      IDT
+ *  0x1000    ------    ----                        Kernel page directory
  *  0x20000   0x21000   0x1000                      Page directory
  *  0x21000   0x22000   0x1000                      Page table n°0
  *  ...                 0x1000                      Other page tables
@@ -72,17 +73,42 @@
  */
 
 /**
+ * \brief   Memory position of the kernel page directory
+ */
+#define KERNEL_PAGE_DIRECTORY_ADDRESS   0x1000
+
+/**
+ * \brief   Memory position of the pages for the kernel heap
+ */
+#define KERNEL_HEAP_PAGE                0x00800000
+
+/**
+ * \brief   Memory positition of the end of the pages for the kernel heap
+ */
+#define KERNEL_HEAP_PAGE_LIMIT          0x10000000
+
+/**
+ * \brief   Memory position of the start of the kernel heap
+ */
+#define KERNEL_HEAP                     0x10000000
+
+/**
+ * \brief   Memory position of the end of the kernel heap
+ */
+#define KERNEL_HEAP_LIMIT               0x40000000
+
+/**
  * \brief   Memory position of the GDT
  *  The GDT has 0xFF segment descriptor and each one is 8 byte long.
  *  The GDT end up in 0x0CF8 !
  */
-#define MEMORY_MAP_GDT_POSITION     0x0500
+#define MEMORY_MAP_GDT_POSITION         0x0500
 
 /**
  * \brief   Memory position of the IDT
  *  The IDT has 0xFF interrupt descriptors and each one is 8 byte long.
  *  The IDT end up in 0x14F8
  */
-#define MEMORY_MAP_IDT_POSITION     0x0D00
+#define MEMORY_MAP_IDT_POSITION         0x0D00
 
 #endif

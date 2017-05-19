@@ -101,7 +101,7 @@ int main(void)
          ltr %ax");
     terminal_special("kernel: TR loaded\n", TERMINAL_INFO);
 
-    init_mm();
+    init_mm(mb_infos->memory_upper);
     terminal_special("kernel: Paging enabled\n", TERMINAL_WARNING);
 
     // Install hardware devices
@@ -111,11 +111,17 @@ int main(void)
     clock_install();
     terminal_special("kernel: Devices installed\n", TERMINAL_INFO);
 
-    terminal_special("kernel: Creating tasks...", TERMINAL_WARNING);
+    // Initialize kernel thread !
+	current            = &p_list[0];
+	current->pid       = 0;
+	current->state     = 1;
+	current->regs.cr3  = (uint32_t) pd0;
+
+    terminal_special("kernel: Creating tasks...\n", TERMINAL_WARNING);
 
     // Load tasks
-    // load_task((uint32_t*) 0x200000, (uint32_t*) &task1, 0x2000);
-    // load_task((uint32_t*) 0x300000, (uint32_t*) &task2, 0x2000);
+    printf("Loaded task %d\n", load_task((char*) &task1, 0x2000));
+    printf("Loaded task %d\n", load_task((char*) &task2, 0x2000));
 
     terminal_special("DONE\n", TERMINAL_WARNING);
 
