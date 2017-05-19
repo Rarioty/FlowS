@@ -22,7 +22,7 @@ extern "C" {
  *
  * \return  Number of characters written
  */
-int printf(const char* __restrict format, ...);
+int printf(const char* format, ...);
 
 /**
  * \brief   Print a formatted string into another string
@@ -33,7 +33,7 @@ int printf(const char* __restrict format, ...);
  *
  * \return  Number of characters written
  */
-int sprintf(char* out, const char* __restrict format, ...);
+int sprintf(char* out, const char* format, ...);
 
 /**
  * \brief   Print a single char

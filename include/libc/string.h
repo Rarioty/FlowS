@@ -33,7 +33,7 @@ size_t strlen(const char* string);
  *
  * \return  The destination pointer
  */
-void* memcpy(void* restrict dstptr, const void* srcptr, size_t size);
+void* memcpy(void* dstptr, const void* srcptr, size_t size);
 
 /**
  * \brief   Compare two chunk of memory
