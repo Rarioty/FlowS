@@ -16,5 +16,3 @@ MAKE    = make
 MFLAGS  = --no-print-directory
 
 SHELL   = /bin/sh
-
-.SILENT:
