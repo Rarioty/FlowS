@@ -18,13 +18,15 @@ static uint16_t* terminal_buffer;
 
 void terminal_initialize(void)
 {
+    size_t y, x;
     terminal_row    = 0;
     terminal_column = 0;
     terminal_color  = base_color;
     terminal_buffer = VGA_MEMORY;
-    for (size_t y = 0; y < VGA_HEIGHT; ++y)
+
+    for (y = 0; y < VGA_HEIGHT; ++y)
     {
-        for (size_t x = 0; x < VGA_WIDTH; ++x)
+        for (x = 0; x < VGA_WIDTH; ++x)
         {
             const size_t index = y * VGA_WIDTH + x;
             terminal_buffer[index] = vga_entry(' ', terminal_color);
@@ -34,13 +36,14 @@ void terminal_initialize(void)
 
 void terminal_scroll()
 {
+    size_t index;
     size_t max = VGA_WIDTH * VGA_HEIGHT - VGA_WIDTH - 1;
-    for (size_t index = 0; index < max; ++index)
+    for (index = 0; index < max; ++index)
     {
         terminal_buffer[index] = terminal_buffer[index + VGA_WIDTH];
     }
 
-    for (size_t index = max+1; index < VGA_WIDTH * VGA_HEIGHT-1; ++index)
+    for (index = max+1; index < VGA_WIDTH * VGA_HEIGHT-1; ++index)
     {
         terminal_buffer[index] = vga_entry(' ', base_color);
     }
@@ -91,7 +94,9 @@ void terminal_putchar(char c)
 
 void terminal_write(const char* data, size_t size)
 {
-    for (size_t i = 0; i < size; ++i)
+    size_t i;
+
+    for (i = 0; i < size; ++i)
     {
         terminal_putchar(data[i]);
     }
