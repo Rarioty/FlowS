@@ -13,7 +13,7 @@ depend: .depend
 
 .depend: $(SRCS)
 	@rm -f ./.depend
-	$(CC) $(CFLAGS) -MM $^ >> ./.depend
+	$(CC) $(LIBKFLAGS) -MM $^ >> ./.depend
 
 # Add it after depend command because it will raise an error otherwise
 include .depend
