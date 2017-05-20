@@ -19,6 +19,7 @@ sources: depend
 	$(ECHO) "DONE"
 
 depend:
+	mkdir -p extern
 	mkdir -p libs
 	mkdir -p doc
 	mkdir -p bin

@@ -99,7 +99,7 @@ void print_multiboot_infos()
         struct boot_module* module = (struct boot_module*)mb_infos->mods_addr;
         for (count = 0; count < mb_infos->mods_count; ++count)
         {
-            printf("  - Module %2d: start=%08X  end=%08X  string='%s'\n", module[count].mod_start, module[count].mod_end, module[count].string);
+            printf("  - Module %2d: start=%08X  end=%08X  string='%s'\n", count, module[count].mod_start, module[count].mod_end, module[count].string);
         }
     }
 
@@ -192,7 +192,7 @@ void print_multiboot_infos()
     {
         struct multiboot_apm_table* table = (struct multiboot_apm_table*)mb_infos->apm_table;
 
-        printf("- APM table found\n", table->version);
+        printf("- APM table found (version %d)\n", table->version);
     }
 
     // VBE
