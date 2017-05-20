@@ -2,6 +2,7 @@
 
 [![Build status](https://travis-ci.org/Rarioty/FlowS.svg?branch=master)](https://travis-ci.org/Rarioty/FlowS)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/2391d8a93bc6413f9658c1a804b62ea6)](https://www.codacy.com/app/Rarioty/FlowS?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Rarioty/FlowS&amp;utm_campaign=Badge_Grade)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/c8c0ee78-1a66-4f42-9df0-ed5ab94e05ce/big.png)](https://insight.sensiolabs.com/projects/c8c0ee78-1a66-4f42-9df0-ed5ab94e05ce)
 [![GitHub Issues](https://img.shields.io/github/issues/Rarioty/FlowS.svg)](https://github.com/Rarioty/FlowS/issues)
 [![License](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg)](https://opensource.org/licenses/MIT)
 
